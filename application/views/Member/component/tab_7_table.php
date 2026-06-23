@@ -1,0 +1,78 @@
+<div class="overlay"></div>
+<div class="loading-img"></div>
+<table id="<?php echo (count($tpl['activeGD'])) ? "tab-7-table-id" : ""; ?>" class="gzblog-table table-striped table-hover" cellpadding="0" cellspacing="0" >
+    <thead>
+        <tr>
+            <th><?php echo __('Member id'); ?></th>
+           <th><?php echo __('Member Name'); ?></th>
+            <th class="title-th"><?php echo __('Spouse Name'); ?></th>
+            <th class="title-th"><?php echo __('Category'); ?></th>
+            <th><?php echo __('Tele1'); ?></th>
+            <th><?php echo __('Email'); ?></th>
+            <th><?php echo __('LTC'); ?></th>
+            <th><?php echo __('YTD'); ?></th>
+            <th class="icon-th"></th>
+            <th class="icon-th"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $count = count($tpl['activeGD']);
+        $status_arr = __('status_arr');
+        if ($count > 0) {
+            for ($i = 0; $i < $count; $i++) {
+                ?>
+                <tr class="<?php echo $i % 2 === 0 ? 'odd' : 'even'; ?>">
+                    <td><?php echo $tpl['activeGD'][$i]['Member_id']; ?></td>
+                   <td><?php echo ($tpl['activeGD'][$i]['F_Name'] ?? ''). ' ' . ($tpl['activeGD'][$i]['M_Name'] ?? '') . ' ' . ($tpl['activeGD'][$i]['L_Name'] ?? ''); ?></td>
+                    <td><?php echo ($tpl['activeGD'][$i]['Sp_FName'] ?? '').' '.($tpl['activeGD'][$i]['Sp_LName'] ?? '');?></td>
+                    <td><?php echo $tpl['activeGD'][$i]['Category']; ?></td>
+                    <td><?php echo $tpl['activeGD'][$i]['Tele1']; ?></td>
+                    <td><?php echo $tpl['activeGD'][$i]['email']; ?></td>
+                    <td><?php echo $tpl['activeGD'][$i]['LTC']; ?></td>
+                    <td><?php echo $tpl['activeGD'][$i]['YTD']; ?></td>
+                    <td><a class="btn btn-success btn-sm" href="<?php echo INSTALL_URL; ?>Member/adminedit/<?php echo $tpl['activeGD'][$i]['ID']; ?>" rev="<?php echo $tpl['activeGD'][$i]['ID']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                   <?php if ($this->controller->isAdmin())  { ?>
+                    <td><a cat="6" class="btn btn-danger btn-sm icon-delete" rev="<?php echo $tpl['activeGD'][$i]['ID']; ?>" href="<?php echo INSTALL_URL; ?>Member/delete/<?php echo $tpl['activeGD'][$i]['ID']; ?>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <?php }?>
+                     <?php if (!$this->controller->isAdmin() )  { ?>
+                    <td><a cat="6" rev="<?php echo $tpl['activeGD'][$i]['ID']; ?>" href=""><span></span></a></td>
+                    <?php }?>
+                
+                </tr>
+                <?php
+            }
+        } else {
+            ?>
+            <tr>
+                <td colspan="9">
+                    <?php
+                    echo __('No matching records found');
+                    ?>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="9">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-flat"><?php echo __('action'); ?></button>
+                    <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo INSTALL_URL ?>Member/export/GD"><?php echo __('export'); ?></a></li>
+                        <li class="divider" style="display:none;"></li>
+                        <li style="display:none;"><a id="delete-selected-id" href="javascript:;"><?php echo __('delete_selected'); ?></a></li>
+                        <li class="divider" style="display:none;"></li>
+                        <li style="display:none;"><a href="<?php echo INSTALL_URL; ?>Member/create"><?php echo __('add_members'); ?></a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table> 

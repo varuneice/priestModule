@@ -1,0 +1,486 @@
+@CHARSET "UTF-8";
+{calendarContainer} {
+    float: left;
+    font-family: Arial;
+    height: 100%;
+    margin: 0 0 10px;
+    width: 100%;
+    table-layout: fixed;
+    position: relative;
+}
+{calendarContainer} .gzABCalendarTable{
+    background-color: #efefef;
+    border: 0 solid #000000;
+    border-collapse: collapse;
+    float: left;
+    font-family: Arial;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellWeekDay,
+{calendarContainer} .gzABCalendarTable .gzABCalCellEmpty
+{calendarContainer} .gzABCalendarTable .gzABCalCellToday, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellReserved, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellDayOff, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellPending, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellPast, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellDisable, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellEmpty, 
+{calendarContainer} .gzABCalendarTable .gzABCalCell,{
+    height: 12.5%;
+    text-align: center;
+    vertical-align: middle;
+    width: 12.5%;
+}
+
+{calendarContainer} .gzABCalendarTable .gzABCalCellAvil, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellPending{
+    cursor: pointer;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellAvil, 
+{calendarContainer} .gzABCalendarTable .gzABCalCell, 
+{calendarContainer} .gzABCalendarTable .gzABCalCellToday, { 
+    cursor: pointer;
+    background-color: {bg_available};
+    color: {color_available};
+    font-size: {font_size_available}px;
+    font-family: {font_famaly_available};
+    {font_style_available}
+}
+
+{calendarContainer} .gzABCalendarTable .gzABCalCellAvil .gzABCalDate{
+    border-radius: 50%;
+    height: 40px;
+    margin: 0 auto;
+    width: 60%;
+    background-color: {bg_available};
+    color: {color_available};
+    font-size: {font_size_available}px;
+    font-family: {font_famaly_available};
+    {font_style_available}
+}
+
+{calendarContainer} .gzABCalendarTable .gzABCalCellDayOff .gzABCalDate{
+    border-radius: 50%;
+    height: 40px;
+    margin: 0 auto;
+    width: 60%;
+    /* background-color: {bg_day_off}; */
+     /*background-color: #F8EA8C;*/
+     background-color: rgb(154, 152, 152);
+    color: {color_day_off};
+    font-size: {font_size_day_off}px;
+    font-family: {font_famaly_day_off};
+    {font_style_day_off}
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellReserved .gzABCalDate{
+    border-radius: 50%;
+    height: 40px;
+    margin: 0 auto;
+    width: 60%;
+    background-color: {bg_booked} !important;
+    color: {color_booked} !important;
+    font-size: {font_size_booked}px !important;
+    font-family: {font_famaly_booked} !important;
+    {font_style_booked}
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellPending .gzABCalDate{
+    border-radius: 50%;
+    height: 40px;
+    margin: 0 auto;
+    width: 60%;
+    background-color: {bg_pending};
+    color: {color_pending};
+    font-size: {font_size_pending}px;
+    font-family: {font_famaly_pending};
+    {font_style_pending}
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellPast{
+    background-color: {bg_past_dates};
+    color: {color_past_dates};
+    font-size: {font_size_past}px;
+    font-family: {font_famaly_past};
+    {font_style_past}
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellEmpty{
+    background-color: {bg_empty};
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellDisable{
+    background-color: #e4e1e5;
+    color: #000;
+    font-size: 13px;
+}
+
+{calendarContainer} .gzABCalendarTable .gzABCalCellColor{
+    width: 20px;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellColorPast{
+    background-color: {bg_past_dates};
+    color: {color_past_dates};
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellColorDisable{
+    background-color: #e4e1e5;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellLinkDate{
+    position: relative;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellPrice{
+    background-color: #ccc;
+    border: solid 1px #000;
+    color: #000;
+    display: none;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    white-space: nowrap;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellPriceStatic{
+    color: #000;
+    white-space: nowrap;
+    margin: 5px 0 0;
+}
+{calendarContainer} .gzABCalendarTable table.gzABCalCellTablePrice tbody td{
+    cursor: default !important;
+}
+{calendarContainer} .gzABCalCellMonth .gzABCalCellLinkMonth {
+    cursor: pointer;
+}
+{calendarContainer} .gzCalHeader{
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;
+}
+{calendarContainer}  .gzABCalCellArrow{
+    cursor: pointer;
+    float: right;
+    padding: 0 7px;
+    text-align: center;
+    vertical-align: middle;
+}
+{calendarContainer} .gzABCalCellArrow a{
+    color: #fff;	
+    font-size: 20px;
+}
+{calendarContainer} .gzABCalCellArrow a:hover{
+    color: {bg_nav_hover_month};
+}
+{calendarContainer} .gzABCalCellMonth{
+    font-family: {font_famaly_month};
+    background-color: {bg_month};
+    color: {color_month};	
+    font-size: {month_size_past}px; 
+    text-align: left;
+    vertical-align: middle;
+    padding: 10px 0;
+    margin: 0;
+    {font_style_month}
+}
+{calendarContainer} .gzABCalendarTable td.gzABCalCellSelected{
+    background-color: {bg_selected};
+}
+{calendarContainer} .gzABCalendarTable td.gzABCalCellSelected img{
+    display: none;
+}
+{calendarContainer} .gzABCalendarTable .close{
+    color:  #b80f0f;
+    position: absolute;
+    right: -2px;
+    top: -10px;
+    font-size: 16px;
+    z-index: 10;    
+}
+
+{calendarContainer} .gzABCalendarTable .gzABCalCellDivImg{
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalDate{
+    margin: 0;
+    padding: 9px;
+    z-index: 2;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellImg{
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellWeek{
+    text-align: center;
+    color: {color_week};
+    background-color: {bg_week;}
+}
+{calendarContainer} .gzABCalendarTable td{
+    border: {border_widht}px solid {border_color};
+    background-color: {bg_week};
+    padding: 6px;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellWeekDay{
+    font-style: italic;
+    font-size: 12px;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellWeekDay,
+{calendarContainer} .gzABCalendarTable .calendarEmpty{
+    padding: 10px;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellToDay{
+    color: {color_today};
+    font-size: {font_size_today}px;
+    font-family: {font_famaly_today};
+    {font_style_today}
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellToDay .gzABCalDate{
+    -webkit-border-radius: 50%; 
+    -moz-border-radius: 50%; 
+    border-radius: 50%; 
+    background-color: #00bdd0;
+    width: 60%;
+    height: 40px;
+    margin: 0 auto;
+}
+{calendarContainer} .gzABCalendarTable .gzABCalCellEvent .gzABCalDate{
+    /*background-color: #ffad34;*/
+    background-color: rgb(154, 152, 152);
+}
+{calendarContainer} .gzABCalendarTable .error-tooltip{
+    display: none;
+}
+{calendarContainer} .gzABCalCellLegend{
+    padding: 20px 20px 10px 20px;
+    float: left;
+    width: 100%;
+    position: relative;
+    none repeat scroll 0 0 #eee
+    -webkit-border-radius: 0 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    border-radius: 0 0 8px 8px;
+    background: none repeat scroll 0 0 #eee;
+    border: 1px solid rgba(224, 223, 222, 1);
+    border-top: none;
+}
+{calendarContainer} .gzABCalCellLabel{
+    width: 40%;
+    position: relative;
+    height: 40px;
+    font-family: {font_famaly_legend};
+    color: {color_legend};	
+    font-size: {font_size_legend}px; 
+    fontt-style: italic;
+}
+/*13june new css for rental legend*/
+{calendarContainer} .gzABCalCellLabel2{
+    /* width: 40%; */
+    width:  17rem;
+    position: relative;
+    height: 40px;
+    font-family: {font_famaly_legend};
+    color: {color_legend};	
+    font-size: {font_size_legend}px; 
+    fontt-style: italic;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
+}
+
+
+{calendarContainer} .gzABCalCellSlots{
+    top: 20px;
+    position: absolute;
+    right: 20px;
+    font-family: {font_famaly_legend};
+    color: {color_legend};	
+    font-size: {font_size_legend}px; 
+    fontt-style: italic;
+}
+{calendarContainer} .gzABCalColorDayOff{
+    /* background-color: {bg_day_off}; */
+     /*background-color: #F8EA8C;*/
+     background-color: rgb(154, 152, 152);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+{calendarContainer} .gzABCalColorDayEvent{
+    /*background-color: #ffad34;*/
+    background-color: rgb(154, 152, 152);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+{calendarContainer} .gzABCalColorAvil{
+    background-color: {bg_available};
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+{calendarContainer} .gzABCalColorPending{
+    background-color: {bg_pending};
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+{calendarContainer} .gzABCalColorReserved{
+    background-color: {bg_booked};
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+{calendarContainer} .gzCalDay{
+    width: 100%;
+    float: left;
+    text-align: center;
+    font-size: 40px;
+    font-weight: lighter;
+    font-family: "Lato",sans-serif;
+    margin-left: -12px;
+}
+{calendarContainer} .gzCalMonth{
+    color: #ffffff;
+    float: left;
+    font-family: "Lato",sans-serif;
+    font-size: 16px;
+    font-weight: lighter;
+    text-align: center;
+    width: 100%;
+}
+{calendarContainer} .gzCalYear{
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: lighter;
+    text-align: center;
+    font-family: "Lato",sans-serif;
+    width: 100%;
+    float: left;
+}
+{calendarContainer} .gzABCalButton{
+    bottom: 20px;
+    position: absolute;
+    right: 20px;
+}
+{calendarContainer} .text-left{
+    text-align: left;
+}
+{calendarContainer} .float-left{
+    float: left;
+}
+{calendarContainer} .showMinCalendar{
+    font-size: 14px;
+    color: #fff;
+    margin-left: 10px;
+}
+{calendarContainer} .miniCalendar{
+    display: none;
+    left: 115px;
+    position: absolute;
+    top: 90px;
+    border: 2px solid black;
+    z-index: 3;
+}
+{calendarContainer} .miniCalendar td{
+    background-color: #fff;
+    z-index: 3;
+}
+{calendarContainer} .miniCalendar td a{
+    color: #000;
+    margin: 15px;
+    font-size: 12px;
+    z-index: 3;
+}
+{calendarContainer} .miniCalendar h2{
+    text-align: center;
+    margin: 7px;
+}
+{calendarContainer} .miniCalendar .currentMonth{
+    color: #cf3a3a;
+}
+
+@media (max-width: 992px) {
+    {calendarContainer} .gzABCalendarTable td {
+        padding: 0 !important;
+    }
+    {calendarContainer} .gzABCalCell .gzABCalCellDivInner .gzABCalDate{
+        width: 60% !important;
+        height: auto !important;
+        font-size: 12px;
+    }
+    {calendarContainer} .gzABCalCellArrow{
+        padding: 0 1px !important;
+    }
+    {calendarContainer} .gzCalDay{
+        font-size: 30px !important;
+    }
+    
+    {calendarContainer} .gzABCalCellLabel{
+        font-size: 11px !important;
+        width: 100% !important;
+        height: 25px !important;
+    }
+    /*13 june new css*/
+    {calendarContainer} .gzABCalCellLabel2{
+        font-size: 11px !important;
+        width: 100% !important;
+        height: 25px !important;
+    }
+    {calendarContainer} .gzCalMonth{
+        font-size: 11px !important;
+    }
+/*13 june comment*/
+    /*{calendarContainer} .gzABCalColorReserved, {calendarContainer} .gzABCalColorAvil, {calendarContainer} .gzABCalColorPending, {calendarContainer} .gzABCalColorDayOff {*/
+    /*    height: 20px !important;*/
+    /*    width: 20px !important;*/
+    /*}*/
+    /*13 june new css*/
+    {calendarContainer} .gzABCalColorReserved, {calendarContainer} .gzABCalColorAvil, {calendarContainer} .gzABCalColorPending, {calendarContainer} .gzABCalColorDayOff ,  {calendarContainer}   .gzABCalColorKBLegend  , {calendarContainer}   .gzABCalColorADLegend  , {calendarContainer}   .gzABCalColorDayEvent  {
+        height: 20px !important;
+        width: 20px !important;
+    }
+    {calendarContainer} .gzABCalButton{
+        position: relative !important;
+        bottom: 0 !important;
+        right: 0 !important;
+    }
+    #gz-abc-main-container .table > thead > tr > th, #gz-abc-main-container .table > tbody > tr > th, #gz-abc-main-container .table > tfoot > tr > th, #gz-abc-main-container .table > thead > tr > td, #gz-abc-main-container .table > tbody > tr > td, #gz-abc-main-container .table > tfoot > tr > td {
+        font-size: 11px !important;
+        padding: 1px !important;
+    }
+    .xdebug-var-dump{
+
+    display: none !important;
+}
+    {calendarContainer} .gzABCalCellSlots{
+        position: relative !important;
+        top: 0 !important;
+        right: 0 !important;
+    }
+}

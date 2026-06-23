@@ -1,0 +1,1 @@
+<?php require 'component/custom_time_price_table.php'; ?>

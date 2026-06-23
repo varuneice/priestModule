@@ -1,0 +1,59 @@
+# Local environment and secrets
+application/config/env.php
+application/config/env_*.php
+.env
+.env.*
+!.env.example
+
+# Composer dependencies and local composer binary
+/vendor/
+/application/controllers/Twillio/vendor/
+/composer.phar
+
+# Runtime logs and error output
+*.log
+error_log
+error*.txt
+/logs/
+/application/controllers/logs/
+/core/framework/logs/
+
+# Runtime cache and test artifacts
+.phpunit.result.cache
+/cache/
+/tmp/
+/temp/
+/sessions/
+
+# Generated uploads, invoices, and database backups
+/application/web/upload/backup/
+/parkinginvoice/
+*.bak
+*.backup
+
+# Local-only scratch/debug scripts
+/clear-otp.php
+/clearcache.php
+/info.php
+/readlog.php
+/script.php
+/ServerTime.php
+
+# Local tooling/editor files
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Hosting/client noise
+.ftpquota
+
+# Local PHP runtime binaries
+php_xdebug-*.dll
+
+# Local PowerShell cache
+/Microsoft/

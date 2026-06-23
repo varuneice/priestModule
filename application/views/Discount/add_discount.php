@@ -1,0 +1,1 @@
+<?php require 'component/discount_table.php'; ?>

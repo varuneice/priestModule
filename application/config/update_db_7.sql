@@ -1,0 +1,1 @@
+ALTER TABLE `reservations` ADD `location` VARCHAR(255) DEFAULT NULL;

@@ -1,0 +1,1 @@
+<?php require 'component/user_table.php'; ?>

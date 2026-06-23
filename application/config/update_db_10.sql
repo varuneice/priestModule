@@ -1,0 +1,1 @@
+ALTER TABLE `members_log` ADD `Status` VARCHAR(255) DEFAULT NULL;

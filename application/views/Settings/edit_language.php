@@ -1,0 +1,1 @@
+<?php require 'component/languages_table.php'; ?>

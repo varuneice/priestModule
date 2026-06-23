@@ -1,0 +1,1 @@
+<?php require 'component/member_table.php'; ?>

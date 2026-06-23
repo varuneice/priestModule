@@ -1,0 +1,9 @@
+# Deny all direct HTTP access to files in this directory.
+# Config files are loaded via PHP require_once — they must never be served as raw text.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order Allow,Deny
+    Deny from all
+</IfModule>
