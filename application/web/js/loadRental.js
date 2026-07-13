@@ -248,7 +248,12 @@ var gz$ = jQuery.noConflict();
             function runRentalZelleAutoSearch() {
                 var donorName = gz$.trim(gz$('#first_name').val() + ' ' + gz$('#second_name').val());
                 var zelleAmount = getRentalAdvanceAmount();
-                var today = new Date().toISOString().split('T')[0];
+                var today = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Chicago',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date());
 
                 gz$('#MemberID1').show();
                 gz$('#zelle-manual-fields').hide();

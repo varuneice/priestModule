@@ -1221,7 +1221,12 @@ var flag = false;
 
         $.post(baseUrl + 'load.php?controller=GzFront&action=importZelleAndSearch', {});
 
-        var today = new Date().toISOString().split('T')[0];
+        var today = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Chicago',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date());
         $.ajax({
             type: 'POST',
             url: baseUrl + 'load.php?controller=GzFront&action=checkCodeDD',

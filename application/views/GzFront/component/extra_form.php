@@ -442,11 +442,11 @@ foreach ($_SESSION[$this->controller->default_product]['slots'][$_REQUEST['cid']
                  
                 
                     <div id="memberidtd" style="display:none;" class="form-group">
-                        <input id="idmem" style="transform: translateX(41%);" class="form-control input-sm point" oninvalid="setCustomValidity('Must be 4 Characters')" type="text" name="Member_id" size="25" value="" title="<?php echo _('Member Id'); ?>" placeholder="<?php echo _('Member Id'); ?>" >
+                        <input id="idmem" style="transform: translateX(41%);" class="form-control input-sm point" oninvalid="setCustomValidity('Must be 4 Characters')" type="text" name="Member_id" size="25" value="" title="<?php echo __('Member Id'); ?>" placeholder="<?php echo __('Member Id'); ?>" >
                     </div> 
                     <div style="display:none;" class="form-group">
                     <label class="control-label" style ="color:white;"></label>
-                        <input id="MemberSelect" class="form-control input-sm" type="text" name="MemberSelect" size="25" value="" title="<?php echo _('Member Id'); ?>" placeholder="<?php echo _('Member Id'); ?>">
+                        <input id="MemberSelect" class="form-control input-sm" type="text" name="MemberSelect" size="25" value="" title="<?php echo __('Member Id'); ?>" placeholder="<?php echo __('Member Id'); ?>">
                     </div> 
 
             

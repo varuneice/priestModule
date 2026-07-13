@@ -361,16 +361,28 @@ setDefaultTime();
 //   28oct2025 new code -by varun
 // ✅ Utility function to safely parse date in both input formats
 function parseDateInput(dateStr) {
-    // Handles both "YYYY-MM-DD" and "DD-MM-YYYY"
+    // Build a local Date object so YYYY-MM-DD does not shift day in US timezones.
     if (!dateStr) return null;
-    const parts = dateStr.split("-");
+    const parts = dateStr.trim().split("-");
+
+    if (parts.length !== 3) return null;
+
     if (parts[0].length === 4) {
-        // Already YYYY-MM-DD
-        return new Date(dateStr);
-    } else if (parts[2].length === 4) {
-        // DD-MM-YYYY → convert to YYYY-MM-DD
-        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+        return new Date(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10) - 1,
+            parseInt(parts[2], 10)
+        );
     }
+
+    if (parts[2].length === 4) {
+        return new Date(
+            parseInt(parts[2], 10),
+            parseInt(parts[0], 10) - 1,
+            parseInt(parts[1], 10)
+        );
+    }
+
     return null;
 }
 
@@ -474,9 +486,11 @@ function CheckHour(elem) {
         alert("Sunday booking — weekday rate applies.");
         return true;
     }
-
-    // 2️⃣ Saturday (6)
+    // Saturday (6)
     if (dayOfWeek === 6) {
+        if (hour > 8) {
+            return reset("Saturday maximum booking allowed is 8 hours.");
+        }
         if (startHour < 10 || newEndHour > 23) {
             return reset(
                 "Bookings on Saturday can start after 10:00 AM and must end before 11:00 PM."
@@ -485,14 +499,13 @@ function CheckHour(elem) {
 
         endElem.value = `${newEndHour}:00`;
         if (hour > 4) {
-            alert("Saturday booking — 8-hour rate applies (over 4 hours).");
+            alert("Saturday booking - 8-hour rate applies (over 4 hours).");
         } else {
-            alert("Saturday booking — weekday rate applies.");
+            alert("Saturday booking - weekday rate applies.");
         }
         return true;
     }
-
-    // 3️⃣ Monday–Friday (1–5)
+    // Monday–Friday (1–5)
     if (dayOfWeek >= 1 && dayOfWeek <= 5) {
         if (hour > 4) {
             return reset(
@@ -936,26 +949,33 @@ function membercheck() {
     } else {
         $("#hours").val(totalHours);
     }
-    
-    
     // 20 june
-    let startingDate = document.getElementById('startdate');
-        startingDate = startingDate.value;
-        let newDateValue = startingDate.split("-").reverse().join("-");
-        let day = new Date(newDateValue);
+    let startingDate = document.getElementById('startdate').value;
+    let day = parseDateInput(startingDate);
 
-        if (day.getDay() != 6) {
-            if (totalHours > 4) {
-                alert("You can not select more than 4 hours except on Saturday");
-                document.getElementById('endtime').value = '';
-                document.getElementById('starttime').value = '';
-                document.getElementById('hours').value = '';
-                return
-            }
+    if (!day || isNaN(day)) {
+        alert("Invalid date. Please select a valid date.");
+        document.getElementById('endtime').value = '';
+        document.getElementById('starttime').value = '';
+        document.getElementById('hours').value = '';
+        return;
+    }
 
+    if (day.getDay() == 6) {
+        if (totalHours > 8) {
+            alert("Saturday maximum booking allowed is 8 hours.");
+            document.getElementById('endtime').value = '';
+            document.getElementById('starttime').value = '';
+            document.getElementById('hours').value = '';
+            return;
         }
-
-
+    } else if (totalHours > 4) {
+        alert("You can not select more than 4 hours except on Saturday");
+        document.getElementById('endtime').value = '';
+        document.getElementById('starttime').value = '';
+        document.getElementById('hours').value = '';
+        return;
+    }
         var endtimetxt = $("#endtime option:selected").text().trim();
         // var endtimetxt = $("#endtime option:selected").text();
         // var txtstarttime = $("#starttime option:selected").text();
@@ -975,27 +995,11 @@ function setDefaultTime() {
     var date = startdate.value.trim();
 
     if (!date) return; // Prevent crash on empty date
-
-    let d;
-
-    // Handle both possible formats
-    if (date.includes("-")) {
-        const parts = date.split("-");
-        if (parts[0].length === 4) {
-            // Format is YYYY-MM-DD (from <input type="date">)
-            d = new Date(date);
-        } else if (parts[2].length === 4) {
-            // Format is DD-MM-YYYY
-            d = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
-        } else {
-            console.error("Unknown date format:", date);
-            return;
-        }
-    } else {
-        console.error("Invalid date format (missing '-'):", date);
+    let d = parseDateInput(date);
+    if (!d) {
+        console.error("Unknown date format:", date);
         return;
     }
-
     if (isNaN(d)) {
         console.error("Invalid date object:", date);
         return;

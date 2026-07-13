@@ -625,7 +625,12 @@
         // Fire import silently in background (non-blocking)
         $.post(url + 'load.php?controller=GzFront&action=importZelleAndSearch', {});
 
-        var today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        var today = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Chicago',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date());
         $.ajax({
             type: 'POST',
             url: url + 'load.php?controller=GzFront&action=checkCodeDD',
