@@ -1005,6 +1005,17 @@ var flag = false;
 
 // ── OTP + Zelle Flow for Priest Booking ───────────────────────────────────────
 (function ($) {
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     var baseUrl = '';
 
     function getBaseUrl() {
@@ -1032,7 +1043,7 @@ var flag = false;
                     return;
                 }
                 function val(id) {
-                    var el = $(res).filter('input#' + id);
+                    var el = getSafeResponseInput(res, id, $);
                     return el.length ? $.trim(el[0].value) : '';
                 }
                 var first = val('MemberName');

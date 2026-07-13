@@ -467,7 +467,7 @@ foreach ($_SESSION[$this->controller->default_product]['slots'][$_REQUEST['cid']
             </div>
         </div> 
     </div>
-    <?php require 'booking_form.php'; ?>
+    <?php require __DIR__ . '/booking_form.php'; ?>
     <div class="box box-solid box-primary">
         <div class="box-body">
             <?php
@@ -500,6 +500,17 @@ foreach ($_SESSION[$this->controller->default_product]['slots'][$_REQUEST['cid']
     <div id='div_session_write' name='div_session_write'></div>
 </form>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     var select = document.getElementById("location");
     var textBoxElement = document.getElementById("address_1");
 
@@ -677,7 +688,7 @@ function MemberSelectPriest() {
                  document.getElementById("MemberSelect").value = Membertext;
                  let MemberName = "";
                 
-                   const memberNameElement = gz$(res).filter("input#MemberName");
+                   const memberNameElement = getSafeResponseInput(res, "MemberName", gz$);
                   if(memberNameElement.length){
                    MemberName = memberNameElement[0].value; 
                   }
@@ -685,7 +696,7 @@ function MemberSelectPriest() {
 
                  
                   let LastName = "";
-                    const LastNameElement = gz$(res).filter("input#last_name");
+                    const LastNameElement = getSafeResponseInput(res, "last_name", gz$);
                     if(LastNameElement.length){
                         LastName = LastNameElement[0].value; 
                        }
@@ -694,7 +705,7 @@ function MemberSelectPriest() {
 
 
                   let memberid = "";
-                  const memberElement = gz$(res).filter("input#memberid");
+                  const memberElement = getSafeResponseInput(res, "memberid", gz$);
                  if(memberElement.length){
                   memberid = memberElement[0].value; 
                  }
@@ -703,7 +714,7 @@ function MemberSelectPriest() {
      
                     let phoneNo = "";
                     let MNo="";
-                     const phoneNoElement = gz$(res).filter("input#Tele1");
+                     const phoneNoElement = getSafeResponseInput(res, "Tele1", gz$);
                     if(phoneNoElement.length){
                        phoneNo = phoneNoElement[0].value;
                        phoneNo= phoneNo.replace("-", "");
@@ -713,42 +724,42 @@ function MemberSelectPriest() {
                     document.getElementById("phone").value = MNo;
      
                     let email = "";
-                     const emailElement = gz$(res).filter("input#email");
+                     const emailElement = getSafeResponseInput(res, "email", gz$);
                     if(emailElement.length){
                         email = emailElement[0].value; 
                     }
                     document.getElementById("email").value = email;
 
                    let street = "";
-                   const streetElement = gz$(res).filter("input#ressidentalAddress");
+                   const streetElement = getSafeResponseInput(res, "ressidentalAddress", gz$);
                   if(streetElement.length){
                     street = streetElement[0].value; 
                   }
                   
 
                   let resaddress = "";
-                   const resaddressElement = gz$(res).filter("input#Address");
+                   const resaddressElement = getSafeResponseInput(res, "Address", gz$);
                   if(resaddressElement.length){
                     resaddress = resaddressElement[0].value; 
                   }
                  
 
                   let state = "";
-                  const stateElement = gz$(res).filter("input#state");
+                  const stateElement = getSafeResponseInput(res, "state", gz$);
                  if(stateElement.length){
                    state = stateElement[0].value; 
                  }
                
 
                  let city = "";
-                    const cityElement = gz$(res).filter("input#city");
+                    const cityElement = getSafeResponseInput(res, "city", gz$);
                    if(cityElement.length){
                       city = cityElement[0].value; 
                    }
                    
 
                    let zipcode = "";
-                    const zipcodeElement = gz$(res).filter("input#zip_code");
+                    const zipcodeElement = getSafeResponseInput(res, "zip_code", gz$);
                    if(zipcodeElement.length){
                     zipcode = zipcodeElement[0].value; 
                    }

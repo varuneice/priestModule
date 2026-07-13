@@ -166,7 +166,7 @@ class Stripe_ApiRequestor
   {
     $myApiKey = $this->_apiKey;
     if (!$myApiKey)
-      $myApiKey = Stripe::$apiKey;
+      $myApiKey = Stripe::getApiKey();
 
     if (!$myApiKey) {
       $msg = 'No API key provided.  (HINT: set your API key using '

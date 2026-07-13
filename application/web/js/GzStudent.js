@@ -1,4 +1,15 @@
 (function ($) {
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     $(function () {
         //debugger;
         var url = $("#container-abc-url-id").text();
@@ -27,7 +38,7 @@
                     }
 
                     function val(id) {
-                        var el = $(res).filter('input#' + id);
+                        var el = getSafeResponseInput(res, id, $);
                         return el.length ? $.trim(el[0].value) : '';
                     }
 
@@ -188,13 +199,13 @@
                         //var Membertext = $("#MemberSelectValue").text();
                         //document.getElementById("MemberSelect").value = Membertext;
                         let MemberName = "";
-                        const memberNameElement = $(res).filter("input#MemberName");
+                        const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                         if (memberNameElement.length) {
                             MemberName = memberNameElement[0].value;
                         }
 
                         let LastName = "";
-                        const LastNameElement = $(res).filter("input#last_name");
+                        const LastNameElement = getSafeResponseInput(res, "last_name", $);
                         if (LastNameElement.length) {
                             LastName = LastNameElement[0].value;
                         }
@@ -204,7 +215,7 @@
 
 
                         let memberid = "";
-                        const memberElement = $(res).filter("input#memberid");
+                        const memberElement = getSafeResponseInput(res, "memberid", $);
                         if (memberElement.length) {
                             memberid = memberElement[0].value;
                         }
@@ -213,7 +224,7 @@
 
                         let phoneNo = "";
                         let MNo = "";
-                        const phoneNoElement = $(res).filter("input#Tele1");
+                        const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                         if (phoneNoElement.length) {
                             phoneNo = phoneNoElement[0].value;
                             phoneNo = phoneNo.replace("-", "");
@@ -223,7 +234,7 @@
                         document.getElementById("Your_Number").value = MNo;
 
                         let email = "";
-                        const emailElement = $(res).filter("input#email");
+                        const emailElement = getSafeResponseInput(res, "email", $);
                         if (emailElement.length) {
                             email = emailElement[0].value;
                         }
@@ -231,7 +242,7 @@
                         
                         
                         let cat1 = "";
-                        const catElement = $(res).filter("input#membercategory");
+                        const catElement = getSafeResponseInput(res, "membercategory", $);
                         if (catElement.length) {
                             cat1 = catElement[0].value;
                         }
@@ -1720,7 +1731,7 @@
                 success: function (res) {
                     //debugger;
                     let memberid = "";
-                    const memberElement = $(res).filter("input#memberid");
+                    const memberElement = getSafeResponseInput(res, "memberid", $);
                     if (memberElement.length) {
                         memberid = memberElement[0].value;
                     }
@@ -1728,14 +1739,14 @@
 
 
                     let phoneNo = "";
-                    const phoneNoElement = $(res).filter("input#Tele1");
+                    const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                     if (phoneNoElement.length) {
                         phoneNo = phoneNoElement[0].value;
                     }
                     document.getElementById("Your_Number").value = phoneNo;
 
                     let email = "";
-                    const emailElement = $(res).filter("input#email");
+                    const emailElement = getSafeResponseInput(res, "email", $);
                     if (emailElement.length) {
                         email = emailElement[0].value;
                     }

@@ -604,6 +604,17 @@ $defaultLanguageId = $this->controller->tpl['default_language']['id'] ?? null;
     </div>
 </div>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
  $(document).ready(function() {
     document.getElementById("starttime").value ="10:00 ";
     $("#endtime").attr("disabled", "disabled");
@@ -807,7 +818,7 @@ function membercheck() {
                  //document.getElementById("MemberSelect").value = Membertext;
                  let MemberName = "";
                 
-                   const memberNameElement = $(res).filter("input#MemberName");
+                   const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                   if(memberNameElement.length){
                    MemberName = memberNameElement[0].value; 
                   }
@@ -815,7 +826,7 @@ function membercheck() {
 
                  
                   let LastName = "";
-                    const LastNameElement = $(res).filter("input#last_name");
+                    const LastNameElement = getSafeResponseInput(res, "last_name", $);
                     if(LastNameElement.length){
                         LastName = LastNameElement[0].value; 
                        }
@@ -824,7 +835,7 @@ function membercheck() {
 
 
                   let memberid = "";
-                  const memberElement = $(res).filter("input#memberid");
+                  const memberElement = getSafeResponseInput(res, "memberid", $);
                  if(memberElement.length){
                   memberid = memberElement[0].value; 
                  }
@@ -833,7 +844,7 @@ function membercheck() {
      
                     let phoneNo = "";
                     let MNo="";
-                     const phoneNoElement = $(res).filter("input#Tele1");
+                     const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                     if(phoneNoElement.length){
                        phoneNo = phoneNoElement[0].value;
                        phoneNo= phoneNo.replace("-", "");
@@ -843,42 +854,42 @@ function membercheck() {
                     document.getElementById("phone").value = MNo;
      
                     let email = "";
-                     const emailElement = $(res).filter("input#email");
+                     const emailElement = getSafeResponseInput(res, "email", $);
                     if(emailElement.length){
                         email = emailElement[0].value; 
                     }
                     document.getElementById("email").value = email;
 
                    let street = "";
-                   const streetElement = $(res).filter("input#ressidentalAddress");
+                   const streetElement = getSafeResponseInput(res, "ressidentalAddress", $);
                   if(streetElement.length){
                     street = streetElement[0].value; 
                   }
                   
 
                   let resaddress = "";
-                   const resaddressElement = $(res).filter("input#Address");
+                   const resaddressElement = getSafeResponseInput(res, "Address", $);
                   if(resaddressElement.length){
                     resaddress = resaddressElement[0].value; 
                   }
                  
 
                   let state = "";
-                  const stateElement = $(res).filter("input#state");
+                  const stateElement = getSafeResponseInput(res, "state", $);
                  if(stateElement.length){
                    state = stateElement[0].value; 
                  }
                
 
                  let city = "";
-                    const cityElement = $(res).filter("input#city");
+                    const cityElement = getSafeResponseInput(res, "city", $);
                    if(cityElement.length){
                       city = cityElement[0].value; 
                    }
                    
 
                    let zipcode = "";
-                    const zipcodeElement = $(res).filter("input#zip_code");
+                    const zipcodeElement = getSafeResponseInput(res, "zip_code", $);
                    if(zipcodeElement.length){
                     zipcode = zipcodeElement[0].value; 
                    }
@@ -929,7 +940,7 @@ function membercheck() {
            // url: "http://localhost/6march/load.php?controller=RentalBooking&action=locationprice",
             success: function (res) {
                 let price = "";
-                const locationpriceElement = $(res).filter("input#rentallocationprice");
+                const locationpriceElement = getSafeResponseInput(res, "rentallocationprice", $);
                 if (locationpriceElement.length) {
                     price = locationpriceElement[0].value;
                 }
@@ -1119,13 +1130,13 @@ function checkdateadmin(){
             //url: "http://localhost/6march/load.php?controller=RentalBooking&action=selecteddate",
             success: function (res) {
                 let existingdate = "";
-                const registereddateElement = $(res).filter("input#rentaldate");
+                const registereddateElement = getSafeResponseInput(res, "rentaldate", $);
                 if (registereddateElement.length) {
                     existingdate = registereddateElement[0].value;
                 }
                 
                 let admindate = "";
-                const notregdateElement = $(res).filter("input#uirentaldate");
+                const notregdateElement = getSafeResponseInput(res, "uirentaldate", $);
                 if (notregdateElement.length) {
                     admindate = notregdateElement[0].value;
                 }

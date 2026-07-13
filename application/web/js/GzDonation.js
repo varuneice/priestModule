@@ -4,6 +4,20 @@
         var otpSessionVerifiedValue = $.trim($('#otp-session-verified').text());
         var otpSessionVerified = otpSessionVerifiedValue !== '' && otpSessionVerifiedValue !== '0';
 
+        function getMemberInput(res, id) {
+            var nodes = $.parseHTML($.trim(res || ''), document, false) || [];
+            var $nodes = $(nodes);
+            var $el = $nodes.filter('input#' + id);
+            if (!$el.length) {
+                $el = $('<div>').append($nodes).find('input#' + id);
+            }
+            return $el;
+        }
+
+        function getMemberInputValue(res, id) {
+            var $el = getMemberInput(res, id);
+            return $el.length ? $.trim($el.val()) : '';
+        }
         function fillFormFromOtp() {
             var $banner = $('#otp-verified-banner');
             $banner.html('<i class="fa fa-spinner fa-spin" style="color:#357ca5;font-size:16px;"></i> Loading member data…')
@@ -25,8 +39,7 @@
                     }
 
                     function val(id) {
-                        var el = $(res).filter('input#' + id);
-                        return el.length ? $.trim(el[0].value) : '';
+                        return getMemberInputValue(res, id);
                     }
 
                     var first  = val('MemberName');
@@ -84,12 +97,12 @@
                 url: url + "load.php?controller=Donations&action=AllMember&cid",
                 success: function (res) {
                     let MemberName = "";
-                    const memberNameElement = $(res).filter("input#MemberName");
+                    const memberNameElement = getMemberInput(res, "MemberName");
                     if (memberNameElement.length) {
                         MemberName = memberNameElement[0].value;
                     }
                     let LastName = "";
-                    const LastNameElement = $(res).filter("input#last_name");
+                    const LastNameElement = getMemberInput(res, "last_name");
                     if (LastNameElement.length) {
                         LastName = LastNameElement[0].value;
                     }
@@ -99,7 +112,7 @@
 
 
                     let memberid = "";
-                    const memberElement = $(res).filter("input#memberid");
+                    const memberElement = getMemberInput(res, "memberid");
                     if (memberElement.length) {
                         memberid = memberElement[0].value;
                     }
@@ -111,8 +124,8 @@
                     // }
                     let spouseName = "";
                      let spouseLastName = "";
-                    const spouseNameElement = $(res).filter("input#Spouse");
-                    const spouseLastNameElement = $(res).filter("input#Spouselast");
+                    const spouseNameElement = getMemberInput(res, "Spouse");
+                    const spouseLastNameElement = getMemberInput(res, "Spouselast");
                      if(spouseLastNameElement.length){
                      spouseLastName = spouseLastNameElement[0].value; 
                      }
@@ -122,21 +135,21 @@
                       document.getElementById("spousename").value = spouseName.concat(" ",spouseLastName);
 
                       let street = "";
-                            const streetElement = $(res).filter("input#ressidentalAddress");
+                            const streetElement = getMemberInput(res, "ressidentalAddress");
                           if(streetElement.length){
                            street = streetElement[0].value; 
                            }
                            document.getElementById("Street").value = street;
 
                            let resaddress = "";
-                   const resaddressElement = $(res).filter("input#Address");
+                   const resaddressElement = getMemberInput(res, "Address");
                   if(resaddressElement.length){
                     resaddress = resaddressElement[0].value; 
                   }
                   document.getElementById("ressidentalAddress").value = resaddress;
 
                   let state = "";
-                  const stateElement = $(res).filter("input#state");
+                  const stateElement = getMemberInput(res, "state");
                  if(stateElement.length){
                    state = stateElement[0].value; 
                  }
@@ -144,42 +157,42 @@
                  
 
                  let city = "";
-                    const cityElement = $(res).filter("input#city");
+                    const cityElement = getMemberInput(res, "city");
                    if(cityElement.length){
                       city = cityElement[0].value; 
                    }
                    document.getElementById("city").value = city;
 
                    let zipcode = "";
-                    const zipcodeElement = $(res).filter("input#zip_code");
+                    const zipcodeElement = getMemberInput(res, "zip_code");
                    if(zipcodeElement.length){
                     zipcode = zipcodeElement[0].value; 
                    }
                    document.getElementById("zip_code").value = zipcode;
 
                    let phoneNo = "";
-                    const phoneNoElement = $(res).filter("input#Tele1");
+                    const phoneNoElement = getMemberInput(res, "Tele1");
                    if(phoneNoElement.length){
                       phoneNo = phoneNoElement[0].value; 
                    }
                    document.getElementById("phone").value = phoneNo;
 
                    let email = "";
-                    const emailElement = $(res).filter("input#email");
+                    const emailElement = getMemberInput(res, "email");
                    if(emailElement.length){
                        email = emailElement[0].value; 
                    }
                    document.getElementById("email").value = email;
 
                    let ltd = "";
-                    const ltdElement = $(res).filter("input#ltd");
+                    const ltdElement = getMemberInput(res, "ltd");
                    if(ltdElement.length){
                     ltd = ltdElement[0].value; 
                    }
                    document.getElementById("ltd1").value = ltd;
 
                    let ytd = "";
-                   const ytdElement = $(res).filter("input#ytd");
+                   const ytdElement = getMemberInput(res, "ytd");
                   if(ytdElement.length){
                     ytd = ytdElement[0].value; 
                   }
@@ -187,7 +200,7 @@
                   
 
                   let cat = "";
-                  const catElement = $(res).filter("input#membercategory");
+                  const catElement = getMemberInput(res, "membercategory");
                  if(catElement.length){
                    cat = catElement[0].value; 
                  }

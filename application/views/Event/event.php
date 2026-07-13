@@ -644,6 +644,15 @@ if (!empty($_POST['create_event'])) {
 
 
 <script>
+    function getResponseInput(res, id) {
+        var nodes = $.parseHTML($.trim(res || ''), document, false) || [];
+        var $nodes = $(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
     var otpVerifiedMemberId = $('#otp-session-verified').text().trim();
     var otpSessionVerified  = !!otpVerifiedMemberId;
 
@@ -656,15 +665,15 @@ if (!empty($_POST['create_event'])) {
             url: url2 + "load.php?controller=Donations&action=AllMemberNew",
             success: function (res) {
                 var firstName = '', lastName = '', el;
-                el = $(res).filter("input#MemberName");   if (el.length) firstName = el[0].value;
-                el = $(res).filter("input#last_name");    if (el.length) lastName  = el[0].value;
+                el = getResponseInput(res, "MemberName");   if (el.length) firstName = el[0].value;
+                el = getResponseInput(res, "last_name");    if (el.length) lastName  = el[0].value;
                 var fullName = (firstName + ' ' + lastName).trim();
                 $('#term').val(fullName);
                 $('#termMember').val(memberId);
                 document.getElementById("Your_Name").value = fullName;
-                el = $(res).filter("input#memberid"); if (el.length) document.getElementById("demmember").value = el[0].value;
-                el = $(res).filter("input#Tele1");    if (el.length) document.getElementById("Tele1").value    = el[0].value;
-                el = $(res).filter("input#email");    if (el.length) document.getElementById("Email").value    = el[0].value;
+                el = getResponseInput(res, "memberid"); if (el.length) document.getElementById("demmember").value = el[0].value;
+                el = getResponseInput(res, "Tele1");    if (el.length) document.getElementById("Tele1").value    = el[0].value;
+                el = getResponseInput(res, "email");    if (el.length) document.getElementById("Email").value    = el[0].value;
             }
         });
     }
@@ -781,7 +790,7 @@ if (!empty($_POST['create_event'])) {
 
             url: "<?= INSTALL_URL ?>load.php?controller=Event&action=checkdatevalid&cid",  
             success: function (res) {
-                var priceimage = $(res).filter("input#dataprice");
+                var priceimage = getResponseInput(res, "dataprice");
                 if (priceimage.length) {
                     LastName = priceimage[0].value;
                 }
@@ -807,12 +816,12 @@ if (!empty($_POST['create_event'])) {
                 document.getElementById("Amount").value = namepuja;
                 document.getElementById("totalamount").value = namepuja;
                 document.getElementById("eventtype").value = puja;
-                var eventuniqueid = $(res).filter("input#uniqueeventid");
+                var eventuniqueid = getResponseInput(res, "uniqueeventid");
                 if (eventuniqueid.length) {
                     finaluniqueid = eventuniqueid[0].value;
                     document.getElementById("eventid").value = finaluniqueid;
                 }
-                var descrip = $(res).filter("input#currenteventdesc");
+                var descrip = getResponseInput(res, "currenteventdesc");
                     if (descrip.length) {
                         descriptiondata = descrip[0].value;
                         var test = descriptiondata.split(".");
@@ -938,19 +947,19 @@ if (!empty($_POST['create_event'])) {
                         //var Membertext = $("#MemberSelectValue").text();
                         //document.getElementById("MemberSelect").value = Membertext;
                         let MemberName = "";
-                        const memberNameElement = $(res).filter("input#MemberName");
+                        const memberNameElement = getResponseInput(res, "MemberName");
                         if (memberNameElement.length) {
                             MemberName = memberNameElement[0].value;
                         }
                         let LastName = "";
-                        const LastNameElement = $(res).filter("input#last_name");
+                        const LastNameElement = getResponseInput(res, "last_name");
                         if (LastNameElement.length) {
                             LastName = LastNameElement[0].value;
                         }
                         document.getElementById("Your_Name").value = MemberName.concat(" ", LastName);
 
                         // let MemberfullName= "";
-                        // const MemberfullNameElement = $(res).filter("input#MemberName");
+                        // const MemberfullNameElement = getResponseInput(res, "MemberName");
                         // if (MemberfullNameElement.length) {
                         //     MemberfullName = MemberfullNameElement[0].value;
                         // }
@@ -958,21 +967,21 @@ if (!empty($_POST['create_event'])) {
 
 
                         let memberid = "";
-                        const memberElement = $(res).filter("input#memberid");
+                        const memberElement = getResponseInput(res, "memberid");
                         if (memberElement.length) {
                             memberid = memberElement[0].value;
                         }
                         document.getElementById("demmember").value = memberid;
                         
                         let phoneNo = "";
-                        const phoneNoElement = $(res).filter("input#Tele1");
+                        const phoneNoElement = getResponseInput(res, "Tele1");
                         if (phoneNoElement.length) {
                             phoneNo = phoneNoElement[0].value;
                         }
                         document.getElementById("Tele1").value = phoneNo;
 
                         let email = "";
-                        const emailElement = $(res).filter("input#email");
+                        const emailElement = getResponseInput(res, "email");
                         if (emailElement.length) {
                             email = emailElement[0].value;
                         }

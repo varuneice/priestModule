@@ -6,6 +6,8 @@ abstract class Stripe
    * @var string The Stripe API key to be used for requests.
    */
   public static $apiKey;
+  private static $useDefaultApiKeyFallback = true;
+
   /**
    * @var string The base URL for the Stripe API.
    */
@@ -25,7 +27,51 @@ abstract class Stripe
    */
   public static function getApiKey()
   {
-    return self::$apiKey;
+    $apiKey = trim((string) self::$apiKey);
+    if ($apiKey !== '') {
+      return $apiKey;
+    }
+
+    if (!self::$useDefaultApiKeyFallback) {
+      return self::$apiKey;
+    }
+
+    return self::getDefaultApiKey();
+  }
+
+  private static function getDefaultApiKey()
+  {
+    foreach (array('STRIPE_API_KEY', 'STRIPE_SECRET_KEY') as $envKey) {
+      if (defined($envKey)) {
+        $apiKey = trim((string) constant($envKey));
+        if ($apiKey !== '') {
+          return $apiKey;
+        }
+      }
+
+      $apiKey = trim((string) getenv($envKey));
+      if ($apiKey !== '') {
+        return $apiKey;
+      }
+    }
+
+    try {
+      if (defined('MODELS_PATH') && class_exists('GzObject')) {
+        GzObject::loadFiles('Model', 'Option');
+        if (class_exists('OptionModel')) {
+          $OptionModel = new OptionModel();
+          $options = $OptionModel->getAllPairValues();
+          $apiKey = trim((string) ($options['stripe_api_key'] ?? ''));
+          if ($apiKey !== '') {
+            return $apiKey;
+          }
+        }
+      }
+    } catch (Throwable $e) {
+    } catch (Exception $e) {
+    }
+
+    return '';
   }
 
   /**
@@ -35,26 +81,31 @@ abstract class Stripe
    */
   public static function setApiKey($apiKey)
   {
-    self::$apiKey = $apiKey;
+    self::$apiKey = trim((string) $apiKey);
+    self::$useDefaultApiKeyFallback = true;
   }
+
   public static function setApiKey1($apiKey)
   {
-    self::$apiKey = $apiKey;
+    self::setApiKey($apiKey);
   }
 
   public static function setApiKey2($apiKey, $paymentAccount, $apiSecretKey)
   {
+    self::$useDefaultApiKeyFallback = false;
+
     if ($paymentAccount == 'Regularaccount') {
-      self::$apiKey = $apiKey;
+      self::$apiKey = trim((string) $apiKey);
       return;
     }
 
     if ($paymentAccount == 'Pujaaccount') {
-      self::$apiKey = $apiSecretKey;
+      self::$apiKey = trim((string) $apiSecretKey);
       return;
     }
 
-    self::$apiKey = $apiSecretKey ?: $apiKey;
+    $secretKey = trim((string) $apiSecretKey);
+    self::$apiKey = ($secretKey !== '') ? $secretKey : trim((string) $apiKey);
   }
 
   /**

@@ -378,6 +378,17 @@ margin-top:2%!important;
 </div>
 <?php require __DIR__ . '/../components/otp_modal.php'; ?>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
 $(function() {
     function setLookupLocked(locked) {
         $('#term').prop('readonly', true).toggleClass('disabledbutton', !!locked);
@@ -403,6 +414,17 @@ $(function() {
 });
 </script>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     $(function() {
         //debugger;
         var url1 = $("#container-abc-url-id").text();
@@ -468,14 +490,14 @@ if (data != "") {
             //var Membertext = $("#MemberSelectValue").text();
             //document.getElementById("MemberSelect").value = Membertext;
             let MemberName = "";
-            const memberNameElement = $(res).filter("input#MemberName");
+            const memberNameElement = getSafeResponseInput(res, "MemberName", $);
             if (memberNameElement.length) {
                 MemberName = memberNameElement[0].value;
             }
               //document.getElementById("second_name").value = MemberName;
 
               let LastName = "";
-              const LastNameElement = $(res).filter("input#last_name");
+              const LastNameElement = getSafeResponseInput(res, "last_name", $);
               if (LastNameElement.length) {
                   LastName = LastNameElement[0].value;
               }
@@ -485,7 +507,7 @@ if (data != "") {
               $("#term").prop("readonly", true).removeClass("disabledbutton");
 
             let memberid = "";
-            const memberElement = $(res).filter("input#memberid");
+            const memberElement = getSafeResponseInput(res, "memberid", $);
             if (memberElement.length) {
                 memberid = memberElement[0].value;
             }
@@ -498,8 +520,8 @@ if (data != "") {
             // }
         let spouseName = "";
         let spouseLastName = "";
-        const spouseNameElement = $(res).filter("input#Spouse");
-        const spouseLastNameElement = $(res).filter("input#Spouselast");
+        const spouseNameElement = getSafeResponseInput(res, "Spouse", $);
+        const spouseLastNameElement = getSafeResponseInput(res, "Spouselast", $);
          if(spouseLastNameElement.length){
          spouseLastName = spouseLastNameElement[0].value; 
          }
@@ -509,21 +531,21 @@ if (data != "") {
           document.getElementById("spousename").value = spouseName.concat(" ",spouseLastName);
 
           let street = "";
-                const streetElement = $(res).filter("input#ressidentalAddress");
+                const streetElement = getSafeResponseInput(res, "ressidentalAddress", $);
               if(streetElement.length){
                street = streetElement[0].value; 
                }
                document.getElementById("Street").value = street;
 
                let resaddress = "";
-       const resaddressElement = $(res).filter("input#Address");
+       const resaddressElement = getSafeResponseInput(res, "Address", $);
       if(resaddressElement.length){
         resaddress = resaddressElement[0].value; 
       }
       document.getElementById("ressidentalAddress").value = resaddress;
 
       let state = "";
-      const stateElement = $(res).filter("input#state");
+      const stateElement = getSafeResponseInput(res, "state", $);
      if(stateElement.length){
        state = stateElement[0].value; 
      }
@@ -531,56 +553,56 @@ if (data != "") {
      
 
      let city = "";
-        const cityElement = $(res).filter("input#city");
+        const cityElement = getSafeResponseInput(res, "city", $);
        if(cityElement.length){
           city = cityElement[0].value; 
        }
        document.getElementById("city").value = city;
 
        let zipcode = "";
-        const zipcodeElement = $(res).filter("input#zip_code");
+        const zipcodeElement = getSafeResponseInput(res, "zip_code", $);
        if(zipcodeElement.length){
         zipcode = zipcodeElement[0].value; 
        }
        document.getElementById("zip_code").value = zipcode;
 
        let phoneNo = "";
-        const phoneNoElement = $(res).filter("input#Tele1");
+        const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
        if(phoneNoElement.length){
           phoneNo = phoneNoElement[0].value; 
        }
        document.getElementById("phone").value = phoneNo;
 
        let email = "";
-        const emailElement = $(res).filter("input#email");
+        const emailElement = getSafeResponseInput(res, "email", $);
        if(emailElement.length){
            email = emailElement[0].value; 
        }
        document.getElementById("email").value = email;
        
        let uniqueid = "";
-       const uniqueidElement = $(res).filter("input#tableid");
+       const uniqueidElement = getSafeResponseInput(res, "tableid", $);
       if(uniqueidElement.length){
           uniqueid = uniqueidElement[0].value; 
       }
       document.getElementById("Your_id").value = uniqueid;
 
      let ltd = "";
-        const ltdElement = $(res).filter("input#ltd");
+        const ltdElement = getSafeResponseInput(res, "ltd", $);
        if(ltdElement.length){
         ltd = ltdElement[0].value; 
        }
        document.getElementById("ltd1").value = ltd;
 
        let ytd = "";
-       const ytdElement = $(res).filter("input#ytd");
+       const ytdElement = getSafeResponseInput(res, "ytd", $);
       if(ytdElement.length){
         ytd = ytdElement[0].value; 
       }
       document.getElementById("ytd1").value = ytd;
 
       let dateupdate = "";
-      const dateupdateElement = $(res).filter("input#updatedate");
+      const dateupdateElement = getSafeResponseInput(res, "updatedate", $);
      if(dateupdateElement.length){
       dateupdate = dateupdateElement[0].value; 
       var newupdate = dateupdate.split("-");
@@ -591,7 +613,7 @@ if (data != "") {
      
      
      let payfor = "";
-      const payforElement = $(res).filter("input#payfor");
+      const payforElement = getSafeResponseInput(res, "payfor", $);
      if(payforElement.length){
       payfor = payforElement[0].value;
       let text = payfor;
@@ -599,14 +621,14 @@ if (data != "") {
      }
 
       let cat = "";
-      const catElement = $(res).filter("input#membercategory");
+      const catElement = getSafeResponseInput(res, "membercategory", $);
      if(catElement.length){
        cat = catElement[0].value; 
      }
      document.getElementById("MembCategory").value = cat;
      
      let membertype = "";
-     const membertypeElement = $(res).filter("input#membershiptype");
+     const membertypeElement = getSafeResponseInput(res, "membershiptype", $);
     if(membertypeElement.length){
         membertype = membertypeElement[0].value; 
     }

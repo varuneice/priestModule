@@ -1390,6 +1390,17 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
 
 
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     $(document).ready(function () {
         debugger
         checkpayfor("donation");
@@ -1581,7 +1592,7 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
     }
 
     function getMemberResponseValue(res, id) {
-        var element = $(res).filter("input#" + id);
+        var element = getSafeResponseInput(res, id, $);
         return element.length ? element[0].value : "";
     }
 
@@ -1965,7 +1976,7 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
             //url: "http://localhost/HDBS_Payment/PriestMember/load.php?controller=Event&action=checkdateevent",
             url: "<?= INSTALL_URL ?>load.php?controller=Event&action=checkdateevent",
             success: function (res) {
-                var priceimage = $(res).filter("input#dataprice");
+                var priceimage = getSafeResponseInput(res, "dataprice", $);
                 if (priceimage.length) {
                     LastName = priceimage[0].value;
                 }
@@ -1976,7 +1987,7 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
                 document.getElementById("Amount").value = namepuja;
                 //document.getElementById("totalamount").value = namepuja;
                 document.getElementById("eventnamehidden").value = puja;
-                var eventuniqueid = $(res).filter("input#uniqueeventid");
+                var eventuniqueid = getSafeResponseInput(res, "uniqueeventid", $);
                 if (eventuniqueid.length) {
                     finaluniqueid = eventuniqueid[0].value;
                     document.getElementById("eventid").value = finaluniqueid;

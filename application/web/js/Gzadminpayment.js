@@ -1,4 +1,15 @@
 (function ($) {
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
     $(function () {
        debugger;
             var url1 = $("#container-abc-url-id").text();
@@ -91,18 +102,18 @@
 
                 url: url + "load.php?controller=Event&action=checkticket",
                 success: function (res) {
-                    var priceimage = $(res).filter("input#dataprice");
+                    var priceimage = getSafeResponseInput(res, "dataprice", $);
                     if (priceimage.length) {
                         LastName = priceimage[0].value;
                     }
                     
-                    var eventuniqueid = $(res).filter("input#eventid");
+                    var eventuniqueid = getSafeResponseInput(res, "eventid", $);
                 if (eventuniqueid.length) {
                     finaluniqueid = eventuniqueid[0].value;
                     document.getElementById("ticketeventid").value = finaluniqueid;
                 }
                     
-                    var ticketid = $(res).filter("input#eventid");
+                    var ticketid = getSafeResponseInput(res, "eventid", $);
                     var parts = LastName.split("/");
                     var namepuja = parts[0];
                     document.getElementById("ticketeventtype").value = namepuja;
@@ -137,12 +148,12 @@
                             //debugger;
                            
                             let MemberName = "";
-                            const memberNameElement = $(res).filter("input#MemberName");
+                            const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                             if (memberNameElement.length) {
                                 MemberName = memberNameElement[0].value;
                             }
                             let LastName = "";
-                            const LastNameElement = $(res).filter("input#last_name");
+                            const LastNameElement = getSafeResponseInput(res, "last_name", $);
                             if (LastNameElement.length) {
                                 LastName = LastNameElement[0].value;
                             }
@@ -150,21 +161,21 @@
         
         
                             let memberid = "";
-                            const memberElement = $(res).filter("input#memberid");
+                            const memberElement = getSafeResponseInput(res, "memberid", $);
                             if (memberElement.length) {
                                 memberid = memberElement[0].value;
                             }
                             document.getElementById("demmemberticket").value = memberid;
                             
                             let phoneNo = "";
-                            const phoneNoElement = $(res).filter("input#Tele1");
+                            const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                             if (phoneNoElement.length) {
                                 phoneNo = phoneNoElement[0].value;
                             }
                             document.getElementById("ticketTele1").value = phoneNo;
         
                             let email = "";
-                            const emailElement = $(res).filter("input#email");
+                            const emailElement = getSafeResponseInput(res, "email", $);
                             if (emailElement.length) {
                                 email = emailElement[0].value;
                             }
@@ -214,33 +225,33 @@ function MemberSelectevent() {
                     //var Membertext = $("#MemberSelectValue").text();
                     //document.getElementById("MemberSelect").value = Membertext;
                     let MemberName = "";
-                    const memberNameElement = $(res).filter("input#MemberName");
+                    const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                     if (memberNameElement.length) {
                         MemberName = memberNameElement[0].value;
                     }
                     let LastName = "";
-                    const LastNameElement = $(res).filter("input#last_name");
+                    const LastNameElement = getSafeResponseInput(res, "last_name", $);
                     if (LastNameElement.length) {
                         LastName = LastNameElement[0].value;
                     }
                     document.getElementById("eventYour_Name").value = MemberName.concat(" ", LastName);
 
                     let memberid = "";
-                    const memberElement = $(res).filter("input#memberid");
+                    const memberElement = getSafeResponseInput(res, "memberid", $);
                     if (memberElement.length) {
                         memberid = memberElement[0].value;
                     }
                     document.getElementById("demmemberevent").value = memberid;
                     
                     let phoneNo = "";
-                    const phoneNoElement = $(res).filter("input#Tele1");
+                    const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                     if (phoneNoElement.length) {
                         phoneNo = phoneNoElement[0].value;
                     }
                     document.getElementById("Tele1").value = phoneNo;
 
                     let email = "";
-                    const emailElement = $(res).filter("input#email");
+                    const emailElement = getSafeResponseInput(res, "email", $);
                     if (emailElement.length) {
                         email = emailElement[0].value;
                     }
@@ -289,12 +300,12 @@ function MemberSelectgiftmisc() {
                     //var Membertext = $("#MemberSelectValue").text();
                     //document.getElementById("MemberSelect").value = Membertext;
                     let MemberName = "";
-                    const memberNameElement = $(res).filter("input#MemberName");
+                    const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                     if (memberNameElement.length) {
                         MemberName = memberNameElement[0].value;
                     }
                     let LastName = "";
-                    const LastNameElement = $(res).filter("input#last_name");
+                    const LastNameElement = getSafeResponseInput(res, "last_name", $);
                     if (LastNameElement.length) {
                         LastName = LastNameElement[0].value;
                     }
@@ -302,7 +313,7 @@ function MemberSelectgiftmisc() {
                     document.getElementById("Your_Namegiftmisc").value = MemberName.concat(" ", LastName);
 
                     let memberid = "";
-                    const memberElement = $(res).filter("input#memberid");
+                    const memberElement = getSafeResponseInput(res, "memberid", $);
                     if (memberElement.length) {
                         memberid = memberElement[0].value;
                     }
@@ -310,8 +321,8 @@ function MemberSelectgiftmisc() {
                     
                     let spouseName = "";
                     let spouseLastName = "";
-                    const spouseNameElement = $(res).filter("input#Spouse");
-                    const spouseLastNameElement = $(res).filter("input#Spouselast");
+                    const spouseNameElement = getSafeResponseInput(res, "Spouse", $);
+                    const spouseLastNameElement = getSafeResponseInput(res, "Spouselast", $);
                     if (spouseLastNameElement.length) {
                         spouseLastName = spouseLastNameElement[0].value;
                     }
@@ -321,21 +332,21 @@ function MemberSelectgiftmisc() {
                     document.getElementById("spousenamegift").value = spouseName.concat(" ", spouseLastName);
 
                     let street = "";
-                    const streetElement = $(res).filter("input#ressidentalAddress");
+                    const streetElement = getSafeResponseInput(res, "ressidentalAddress", $);
                     if (streetElement.length) {
                         street = streetElement[0].value;
                     }
                     document.getElementById("Streetgift").value = street;
 
                     let resaddress = "";
-                    const resaddressElement = $(res).filter("input#Address");
+                    const resaddressElement = getSafeResponseInput(res, "Address", $);
                     if (resaddressElement.length) {
                         resaddress = resaddressElement[0].value;
                     }
                     document.getElementById("ressidentalAddressgift").value = resaddress;
 
                     let state = "";
-                    const stateElement = $(res).filter("input#state");
+                    const stateElement = getSafeResponseInput(res, "state", $);
                     if (stateElement.length) {
                         state = stateElement[0].value;
                     }
@@ -343,28 +354,28 @@ function MemberSelectgiftmisc() {
 
 
                     let city = "";
-                    const cityElement = $(res).filter("input#city");
+                    const cityElement = getSafeResponseInput(res, "city", $);
                     if (cityElement.length) {
                         city = cityElement[0].value;
                     }
                     document.getElementById("citygift").value = city;
 
                     let zipcode = "";
-                    const zipcodeElement = $(res).filter("input#zip_code");
+                    const zipcodeElement = getSafeResponseInput(res, "zip_code", $);
                     if (zipcodeElement.length) {
                         zipcode = zipcodeElement[0].value;
                     }
                     document.getElementById("zip_codegift").value = zipcode;
 
                     let phoneNo = "";
-                    const phoneNoElement = $(res).filter("input#Tele1");
+                    const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                     if (phoneNoElement.length) {
                         phoneNo = phoneNoElement[0].value;
                     }
                     document.getElementById("phonegift").value = phoneNo;
 
                     let email = "";
-                    const emailElement = $(res).filter("input#email");
+                    const emailElement = getSafeResponseInput(res, "email", $);
                     if (emailElement.length) {
                         email = emailElement[0].value;
                     }
@@ -416,21 +427,21 @@ function MemberSelectgiftmisc() {
                         //var Membertext = $("#MemberSelectValue").text();
                         //document.getElementById("MemberSelect").value = Membertext;
                         let MemberName = "";
-                        const memberNameElement = $(res).filter("input#MemberName");
+                        const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                         if (memberNameElement.length) {
                             MemberName = memberNameElement[0].value;
                         }
                           //document.getElementById("second_name").value = MemberName;
             
                           let LastName = "";
-                          const LastNameElement = $(res).filter("input#last_name");
+                          const LastNameElement = getSafeResponseInput(res, "last_name", $);
                           if (LastNameElement.length) {
                               LastName = LastNameElement[0].value;
                           }
                           document.getElementById("lookupYour_Name").value = MemberName.concat(" ", LastName);
             
                         let memberid = "";
-                        const memberElement = $(res).filter("input#memberid");
+                        const memberElement = getSafeResponseInput(res, "memberid", $);
                         if (memberElement.length) {
                             memberid = memberElement[0].value;
                         }
@@ -442,8 +453,8 @@ function MemberSelectgiftmisc() {
                         // }
                     let spouseName = "";
                     let spouseLastName = "";
-                    const spouseNameElement = $(res).filter("input#Spouse");
-                    const spouseLastNameElement = $(res).filter("input#Spouselast");
+                    const spouseNameElement = getSafeResponseInput(res, "Spouse", $);
+                    const spouseLastNameElement = getSafeResponseInput(res, "Spouselast", $);
                      if(spouseLastNameElement.length){
                      spouseLastName = spouseLastNameElement[0].value; 
                      }
@@ -453,21 +464,21 @@ function MemberSelectgiftmisc() {
                       document.getElementById("spouselookup").value = spouseName.concat(" ",spouseLastName);
             
                       let street = "";
-                            const streetElement = $(res).filter("input#ressidentalAddress");
+                            const streetElement = getSafeResponseInput(res, "ressidentalAddress", $);
                           if(streetElement.length){
                            street = streetElement[0].value; 
                            }
                            document.getElementById("lookupStreet").value = street;
             
                            let resaddress = "";
-                   const resaddressElement = $(res).filter("input#Address");
+                   const resaddressElement = getSafeResponseInput(res, "Address", $);
                   if(resaddressElement.length){
                     resaddress = resaddressElement[0].value; 
                   }
                   document.getElementById("lookupressidentalAddress").value = resaddress;
             
                   let state = "";
-                  const stateElement = $(res).filter("input#state");
+                  const stateElement = getSafeResponseInput(res, "state", $);
                  if(stateElement.length){
                    state = stateElement[0].value; 
                  }
@@ -475,42 +486,42 @@ function MemberSelectgiftmisc() {
                  
             
                  let city = "";
-                    const cityElement = $(res).filter("input#city");
+                    const cityElement = getSafeResponseInput(res, "city", $);
                    if(cityElement.length){
                       city = cityElement[0].value; 
                    }
                    document.getElementById("lookupcity").value = city;
             
                    let zipcode = "";
-                    const zipcodeElement = $(res).filter("input#zip_code");
+                    const zipcodeElement = getSafeResponseInput(res, "zip_code", $);
                    if(zipcodeElement.length){
                     zipcode = zipcodeElement[0].value; 
                    }
                    document.getElementById("lookupzip_code").value = zipcode;
             
                    let phoneNo = "";
-                    const phoneNoElement = $(res).filter("input#Tele1");
+                    const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                    if(phoneNoElement.length){
                       phoneNo = phoneNoElement[0].value; 
                    }
                    document.getElementById("lookupphone").value = phoneNo;
             
                    let email = "";
-                    const emailElement = $(res).filter("input#email");
+                    const emailElement = getSafeResponseInput(res, "email", $);
                    if(emailElement.length){
                        email = emailElement[0].value; 
                    }
                    document.getElementById("lookupemail").value = email;
                    
                    let uniqueid = "";
-                   const uniqueidElement = $(res).filter("input#tableid");
+                   const uniqueidElement = getSafeResponseInput(res, "tableid", $);
                   if(uniqueidElement.length){
                       uniqueid = uniqueidElement[0].value; 
                   }
                   document.getElementById("Your_id").value = uniqueid;
             
                   let dateupdate = "";
-                  const dateupdateElement = $(res).filter("input#updatedate");
+                  const dateupdateElement = getSafeResponseInput(res, "updatedate", $);
                  if(dateupdateElement.length){
                   dateupdate = dateupdateElement[0].value; 
                   var newupdate = dateupdate.split("-");
@@ -519,7 +530,7 @@ function MemberSelectgiftmisc() {
                  }
             
                  let payfor = "";
-                  const payforElement = $(res).filter("input#payfor");
+                  const payforElement = getSafeResponseInput(res, "payfor", $);
                  if(payforElement.length){
                   payfor = payforElement[0].value;
                   let text = payfor;
@@ -527,14 +538,14 @@ function MemberSelectgiftmisc() {
                  }
             
                   let cat = "";
-                  const catElement = $(res).filter("input#membercategory");
+                  const catElement = getSafeResponseInput(res, "membercategory", $);
                  if(catElement.length){
                    cat = catElement[0].value; 
                  }
                  document.getElementById("MembCategory").value = cat;
                  
                  let membertype = "";
-                 const membertypeElement = $(res).filter("input#membershiptype");
+                 const membertypeElement = getSafeResponseInput(res, "membershiptype", $);
                 if(membertypeElement.length){
                     membertype = membertypeElement[0].value; 
                 }

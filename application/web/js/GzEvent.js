@@ -17,6 +17,17 @@
         }); 
         
         var url = $("#container-abc-url-id").text();
+
+        function getEventInput(res, id) {
+            var nodes = $.parseHTML($.trim(res || ''), document, false) || [];
+            var $nodes = $(nodes);
+            var $el = $nodes.filter('input#' + id);
+            if (!$el.length) {
+                $el = $('<div>').append($nodes).find('input#' + id);
+            }
+            return $el;
+        }
+
         debugger;
         $("#term").autocomplete({
             //source: "http://localhost/HDBS_Payment/PriestMember/ajax-db-search.php",
@@ -71,6 +82,7 @@
                     var evedata = datanew.split('<');
                     var evenewata = evedata[0].replace(/\\\"/g, '');
                     var getdata = JSON.parse(evenewata);
+                    var LastName = '';
                     
                  
                     if (getdata.Events!=null) {
@@ -135,7 +147,7 @@
                         }
 
                     }
-                    //var ticketid = $(res).filter("input#eventid");
+                    //var ticketid = getEventInput(res, "eventid");
 
                     var parts = LastName.split("/");
                     var namepuja = parts[0];
@@ -175,22 +187,23 @@
 
                 url: url + "load.php?controller=Event&action=checkticket",
                 success: function (res) {
-                    var priceimage = $(res).filter("input#dataprice");
+                    var LastName = "";
+                    var priceimage = getEventInput(res, "dataprice");
                     if (priceimage.length) {
                         LastName = priceimage[0].value;
                     }
                  if(LastName != ""){
-                    var ticketimage = $(res).filter("input#ticketimage");
+                    var ticketimage = getEventInput(res, "ticketimage");
                     if (ticketimage.length) {
                         ticketeventimage = ticketimage[0].value;
                     }
                     
-                    var eventuniqueid = $(res).filter("input#eventid");
+                    var eventuniqueid = getEventInput(res, "eventid");
                 if (eventuniqueid.length) {
                     finaluniqueid = eventuniqueid[0].value;
                     document.getElementById("ticketeventid").value = finaluniqueid;
                 }
-                    var descrip = $(res).filter("input#descriptiontext");
+                    var descrip = getEventInput(res, "descriptiontext");
                     if (descrip.length) {
                         descriptiondata = descrip[0].value;
                         var test = descriptiondata.split(".");
@@ -234,7 +247,7 @@
                         }
 
                     }
-                    var ticketid = $(res).filter("input#eventid");
+                    var ticketid = getEventInput(res, "eventid");
                     //    if( ticketid.length){
                     //     valticket =  ticketid[0].value; 
                     //     $.ajax({
@@ -308,19 +321,19 @@
                             //var Membertext = $("#MemberSelectValue").text();
                             //document.getElementById("MemberSelect").value = Membertext;
                             let MemberName = "";
-                            const memberNameElement = $(res).filter("input#MemberName");
+                            const memberNameElement = getEventInput(res, "MemberName");
                             if (memberNameElement.length) {
                                 MemberName = memberNameElement[0].value;
                             }
                             let LastName = "";
-                            const LastNameElement = $(res).filter("input#last_name");
+                            const LastNameElement = getEventInput(res, "last_name");
                             if (LastNameElement.length) {
                                 LastName = LastNameElement[0].value;
                             }
                             document.getElementById("Your_Name").value = MemberName.concat(" ", LastName);
 
                             // let MemberfullName= "";
-                            // const MemberfullNameElement = $(res).filter("input#MemberName");
+                            // const MemberfullNameElement = getEventInput(res, "MemberName");
                             // if (MemberfullNameElement.length) {
                             //     MemberfullName = MemberfullNameElement[0].value;
                             // }
@@ -328,7 +341,7 @@
 
 
                             let memberid = "";
-                            const memberElement = $(res).filter("input#memberid");
+                            const memberElement = getEventInput(res, "memberid");
                             if (memberElement.length) {
                                 memberid = memberElement[0].value;
                             }
@@ -339,14 +352,14 @@
                             // window.location.assign(url);
                             // }
                             let phoneNo = "";
-                            const phoneNoElement = $(res).filter("input#Tele1");
+                            const phoneNoElement = getEventInput(res, "Tele1");
                             if (phoneNoElement.length) {
                                 phoneNo = phoneNoElement[0].value;
                             }
                             document.getElementById("Tele1").value = phoneNo;
 
                             let email = "";
-                            const emailElement = $(res).filter("input#email");
+                            const emailElement = getEventInput(res, "email");
                             if (emailElement.length) {
                                 email = emailElement[0].value;
                             }

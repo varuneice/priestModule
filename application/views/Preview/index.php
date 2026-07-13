@@ -385,6 +385,25 @@
         </div>
     </div>
 
+    <script>
+(function ($) {
+    function previewMemberCheck() {
+        var value = $('#registrationmember').val();
+        var isMember = value === 'member';
+        $('#termdiv, #memberidtd').toggle(isMember);
+        $('#term, #idmem').prop('required', isMember);
+
+        $('#first_name, #second_name, #phone, #email, #address_1, #term, #termMember, #idmem').val('');
+        if (!isMember) {
+            $('#otp-verified-banner').removeClass('otp-show').hide();
+            $('#otp-session-verified').text('');
+        }
+    }
+
+    window.membercheck = previewMemberCheck;
+    $(document).on('change', '#registrationmember', previewMemberCheck);
+})(jQuery);
+</script>
     </body>
 </html>
 <script>

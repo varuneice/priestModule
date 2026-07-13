@@ -478,6 +478,17 @@ if (!empty($_POST['create_Student'])) {
 <div id="otp-session-verified" style="display:none"><?= htmlspecialchars($_SESSION['otp_verified_member'] ?? '') ?></div>
 <?php if (!empty($_SESSION['otp_verified_member'])): ?>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
 $(function() {
     $('#otp-gate').hide();
     $('#otp-verified-banner').addClass('otp-show').css('display', 'table-row');
@@ -489,6 +500,17 @@ $(function() {
     <?php } ?>
 </div>
 <script>
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+
 
 var browser ="";
 $(document).ready(function(){
@@ -831,13 +853,13 @@ $(function() {
                         //var Membertext = $("#MemberSelectValue").text();
                         //document.getElementById("MemberSelect").value = Membertext;
                         let MemberName = "";
-                        const memberNameElement = $(res).filter("input#MemberName");
+                        const memberNameElement = getSafeResponseInput(res, "MemberName", $);
                         if (memberNameElement.length) {
                             MemberName = memberNameElement[0].value;
                         }
 
                         let LastName = "";
-                        const LastNameElement = $(res).filter("input#last_name");
+                        const LastNameElement = getSafeResponseInput(res, "last_name", $);
                         if (LastNameElement.length) {
                             LastName = LastNameElement[0].value;
                         }
@@ -847,7 +869,7 @@ $(function() {
 
 
                         let memberid = "";
-                        const memberElement = $(res).filter("input#memberid");
+                        const memberElement = getSafeResponseInput(res, "memberid", $);
                         if (memberElement.length) {
                             memberid = memberElement[0].value;
                         }
@@ -856,7 +878,7 @@ $(function() {
 
                         let phoneNo = "";
                         let MNo = "";
-                        const phoneNoElement = $(res).filter("input#Tele1");
+                        const phoneNoElement = getSafeResponseInput(res, "Tele1", $);
                         if (phoneNoElement.length) {
                             phoneNo = phoneNoElement[0].value;
                             phoneNo = phoneNo.replace("-", "");
@@ -866,7 +888,7 @@ $(function() {
                         document.getElementById("Your_Number").value = MNo;
 
                         let email = "";
-                        const emailElement = $(res).filter("input#email");
+                        const emailElement = getSafeResponseInput(res, "email", $);
                         if (emailElement.length) {
                             email = emailElement[0].value;
                         }
@@ -874,7 +896,7 @@ $(function() {
                         
                         
                         let cat1 = "";
-                        const catElement = $(res).filter("input#membercategory");
+                        const catElement = getSafeResponseInput(res, "membercategory", $);
                         if (catElement.length) {
                             cat1 = catElement[0].value;
                         }

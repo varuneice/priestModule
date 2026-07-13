@@ -1,3 +1,13 @@
+    function getSafeResponseInput(res, id, jq) {
+        var $jq = jq || (typeof gz$ !== 'undefined' ? gz$ : $);
+        var nodes = $jq.parseHTML($jq.trim(res || ''), document, false) || [];
+        var $nodes = $jq(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $jq('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
 (function($) {
     $(function() {
          var url = $("#container-abc-url-id").text();
@@ -48,7 +58,7 @@
         //     url: url + "load.php?controller=RentalBooking&action=locationprice&cid=location",
         //     success: function (res) {
         //         let price = "";
-        //         // const locationpriceElement = $(res).filter("input#rentallocationprice");
+        //         // const locationpriceElement = getSafeResponseInput(res, "rentallocationprice", $);
         //         // if (locationpriceElement.length) {
         //         //     price = locationpriceElement[0].value;
         //         // }

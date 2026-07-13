@@ -13,6 +13,7 @@ include_once FRAMEWORK_PATH . 'DeleteQuery.php';
 class Model extends GzObject {
 
     protected $pdo, $structure;
+    protected static $pdoPool = array();
 
     /** @var boolean|callback */
     public $debug;
@@ -97,7 +98,7 @@ class Model extends GzObject {
         if ($is_remote) {
             // Find system CA cert bundle (Windows XAMPP or Linux)
             $ca_paths = [
-                'C:\\xampp82\\apache\\bin\\curl-ca-bundle.crt', // Windows XAMPP
+                'C:\xampp82\apache\bin\curl-ca-bundle.crt', // Windows XAMPP
                 '/etc/ssl/certs/ca-certificates.crt',
                 '/etc/pki/tls/certs/ca-bundle.crt',
                 '/etc/ssl/ca-bundle.pem',
@@ -112,10 +113,24 @@ class Model extends GzObject {
         }
 
         try {
-            $this->pdo = new PDO($dns, $db_user, $this->pass, $pdo_options);
-            // Azure MySQL enforces ONLY_FULL_GROUP_BY; remove it for this session
-            // so GROUP BY queries work the same as on local MySQL.
-            $this->pdo->exec("SET SESSION sql_mode = REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')");
+            $poolKey = sha1($dns . "\n" . $this->user . "\n" . $this->pass . "\n" . serialize($pdo_options));
+            if (!isset(self::$pdoPool[$poolKey])) {
+                if (class_exists('DbProfiler')) {
+                    DbProfiler::start();
+                    $connectStartedAt = microtime(true);
+                }
+                self::$pdoPool[$poolKey] = new PDO($dns, $db_user, $this->pass, $pdo_options);
+                if (class_exists('DbProfiler')) {
+                    DbProfiler::recordConnect(microtime(true) - $connectStartedAt, $this->host, $this->database);
+                }
+                // Azure MySQL enforces ONLY_FULL_GROUP_BY; remove it once per request connection.
+                $queryStartedAt = microtime(true);
+                self::$pdoPool[$poolKey]->exec("SET SESSION sql_mode = REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')");
+                if (class_exists('DbProfiler')) {
+                    DbProfiler::recordQuery(microtime(true) - $queryStartedAt, "SET SESSION sql_mode = REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')");
+                }
+            }
+            $this->pdo = self::$pdoPool[$poolKey];
         } catch (Exception $e) {
             $msg = 'DB connection failed: ' . $e->getMessage();
             error_log('[Model] ' . $msg . ' | host=' . $this->host . ' user=' . $db_user . ' db=' . $this->database);

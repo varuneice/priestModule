@@ -1132,7 +1132,16 @@ if (!empty($_POST['create_donation'])) {
                         }
 
                         //autocomplete  
-                        function MemberSelectdonation() {
+    function getDonationMemberInput(res, id) {
+        var nodes = $.parseHTML($.trim(res || ''), document, false) || [];
+        var $nodes = $(nodes);
+        var $el = $nodes.filter('input#' + id);
+        if (!$el.length) {
+            $el = $('<div>').append($nodes).find('input#' + id);
+        }
+        return $el;
+    }
+   function MemberSelectdonation() {
                             var url2 = $("#container-abc-url-id").text();
                             var self = this;
                             var data = $("#termMember").val();
@@ -1150,12 +1159,12 @@ if (!empty($_POST['create_donation'])) {
                                             //var Membertext = $("#MemberSelectValue").text();
                                             //document.getElementById("MemberSelect").value = Membertext;
                                             let MemberName = "";
-                                            const memberNameElement = $(res).filter("input#MemberName");
+                                            const memberNameElement = getDonationMemberInput(res, "MemberName");
                                             if (memberNameElement.length) {
                                                 MemberName = memberNameElement[0].value;
                                             }
                                             let LastName = "";
-                                            const LastNameElement = $(res).filter("input#last_name");
+                                            const LastNameElement = getDonationMemberInput(res, "last_name");
                                             if (LastNameElement.length) {
                                                 LastName = LastNameElement[0].value;
                                             }
@@ -1165,7 +1174,7 @@ if (!empty($_POST['create_donation'])) {
 
 
                                             let memberid = "";
-                                            const memberElement = $(res).filter("input#memberid");
+                                            const memberElement = getDonationMemberInput(res, "memberid");
                                             if (memberElement.length) {
                                                 memberid = memberElement[0].value;
                                             }
@@ -1177,8 +1186,8 @@ if (!empty($_POST['create_donation'])) {
                                             // }
                                             let spouseName = "";
                                             let spouseLastName = "";
-                                            const spouseNameElement = $(res).filter("input#Spouse");
-                                            const spouseLastNameElement = $(res).filter("input#Spouselast");
+                                            const spouseNameElement = getDonationMemberInput(res, "Spouse");
+                                            const spouseLastNameElement = getDonationMemberInput(res, "Spouselast");
                                             if (spouseLastNameElement.length) {
                                                 spouseLastName = spouseLastNameElement[0].value;
                                             }
@@ -1188,21 +1197,21 @@ if (!empty($_POST['create_donation'])) {
                                             document.getElementById("spousename").value = spouseName.concat(" ", spouseLastName);
 
                                             let street = "";
-                                            const streetElement = $(res).filter("input#ressidentalAddress");
+                                            const streetElement = getDonationMemberInput(res, "ressidentalAddress");
                                             if (streetElement.length) {
                                                 street = streetElement[0].value;
                                             }
                                             document.getElementById("Street").value = street;
 
                                             let resaddress = "";
-                                            const resaddressElement = $(res).filter("input#Address");
+                                            const resaddressElement = getDonationMemberInput(res, "Address");
                                             if (resaddressElement.length) {
                                                 resaddress = resaddressElement[0].value;
                                             }
                                             document.getElementById("ressidentalAddress").value = resaddress;
 
                                             let state = "";
-                                            const stateElement = $(res).filter("input#state");
+                                            const stateElement = getDonationMemberInput(res, "state");
                                             if (stateElement.length) {
                                                 state = stateElement[0].value;
                                             }
@@ -1210,42 +1219,42 @@ if (!empty($_POST['create_donation'])) {
 
 
                                             let city = "";
-                                            const cityElement = $(res).filter("input#city");
+                                            const cityElement = getDonationMemberInput(res, "city");
                                             if (cityElement.length) {
                                                 city = cityElement[0].value;
                                             }
                                             document.getElementById("city").value = city;
 
                                             let zipcode = "";
-                                            const zipcodeElement = $(res).filter("input#zip_code");
+                                            const zipcodeElement = getDonationMemberInput(res, "zip_code");
                                             if (zipcodeElement.length) {
                                                 zipcode = zipcodeElement[0].value;
                                             }
                                             document.getElementById("zip_code").value = zipcode;
 
                                             let phoneNo = "";
-                                            const phoneNoElement = $(res).filter("input#Tele1");
+                                            const phoneNoElement = getDonationMemberInput(res, "Tele1");
                                             if (phoneNoElement.length) {
                                                 phoneNo = phoneNoElement[0].value;
                                             }
                                             document.getElementById("phone").value = phoneNo;
 
                                             let email = "";
-                                            const emailElement = $(res).filter("input#email");
+                                            const emailElement = getDonationMemberInput(res, "email");
                                             if (emailElement.length) {
                                                 email = emailElement[0].value;
                                             }
                                             document.getElementById("email").value = email;
 
                                             let ltd = "";
-                                            const ltdElement = $(res).filter("input#ltd");
+                                            const ltdElement = getDonationMemberInput(res, "ltd");
                                             if (ltdElement.length) {
                                                 ltd = ltdElement[0].value;
                                             }
                                             document.getElementById("ltd1").value = ltd;
 
                                             let ytd = "";
-                                            const ytdElement = $(res).filter("input#ytd");
+                                            const ytdElement = getDonationMemberInput(res, "ytd");
                                             if (ytdElement.length) {
                                                 ytd = ytdElement[0].value;
                                             }
@@ -1253,7 +1262,7 @@ if (!empty($_POST['create_donation'])) {
 
 
                                             let cat = "";
-                                            const catElement = $(res).filter("input#membercategory");
+                                            const catElement = getDonationMemberInput(res, "membercategory");
                                             if (catElement.length) {
                                                 cat = catElement[0].value;
                                             }

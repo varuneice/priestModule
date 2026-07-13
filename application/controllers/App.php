@@ -86,6 +86,46 @@ class App extends Controller {
         }
     }
 
+    protected function getStripeApiKey()
+    {
+        $stripeApiKey = trim((string) ($this->tpl["option_arr_values"]["stripe_api_key"] ?? ''));
+        if ($stripeApiKey !== '') {
+            return $stripeApiKey;
+        }
+
+        $stripeApiKey = trim((string) ($this->option_arr["stripe_api_key"] ?? ''));
+        if ($stripeApiKey !== '') {
+            return $stripeApiKey;
+        }
+
+        try {
+            GzObject::loadFiles('Model', 'Option');
+            $OptionModel = new OptionModel();
+            $options = $OptionModel->getAllPairValues();
+            $stripeApiKey = trim((string) ($options["stripe_api_key"] ?? ''));
+            if ($stripeApiKey !== '') {
+                $this->option_arr = $options;
+                $this->tpl['option_arr_values'] = $options;
+                return $stripeApiKey;
+            }
+        } catch (Throwable $e) {
+        }
+
+        foreach (array('STRIPE_API_KEY', 'STRIPE_SECRET_KEY', 'STRIPE_PUJA_SECRET_KEY') as $envKey) {
+            if (defined($envKey)) {
+                $stripeApiKey = trim((string) constant($envKey));
+                if ($stripeApiKey !== '') {
+                    return $stripeApiKey;
+                }
+            }
+            $stripeApiKey = trim((string) getenv($envKey));
+            if ($stripeApiKey !== '') {
+                return $stripeApiKey;
+            }
+        }
+
+        return '';
+    }
     function isUser() {
 
         return $this->getRoleId() == 2;
