@@ -7,6 +7,33 @@ class Admin extends App {
     var $layout = 'admin';
     var $option_arr = null;
 
+    private function getAdminSessionTimeoutSeconds(): int {
+        return 7200;
+    }
+
+    private function setAdminSessionActivity(): void {
+        if (!isset($_SESSION['admin_login_time'])) {
+            $_SESSION['admin_login_time'] = time();
+        }
+        $_SESSION['admin_last_activity'] = time();
+    }
+
+    private function clearAdminSession(): void {
+        unset(
+            $_SESSION[$this->default_user],
+            $_SESSION['admin_login_time'],
+            $_SESSION['admin_last_activity']
+        );
+    }
+
+    private function isAdminSessionExpired(): bool {
+        $lastActivity = (int) ($_SESSION['admin_last_activity'] ?? 0);
+        if ($lastActivity <= 0) {
+            return false;
+        }
+        return (time() - $lastActivity) > $this->getAdminSessionTimeoutSeconds();
+    }
+
     function beforeFilter() {
         GzObject::loadFiles('Model', 'Option');
         $OptionModel = new OptionModel();
@@ -27,6 +54,14 @@ class Admin extends App {
         if (!$this->isLoged() && $req_action != 'login' && $req_action != 'registration' && $req_action != 'forgot') {
 
             Util::redirect(INSTALL_URL . "Admin/login");
+        }
+
+        if ($this->isLoged()) {
+            if ($this->isAdminSessionExpired()) {
+                $this->clearAdminSession();
+                Util::redirect(INSTALL_URL . "Admin/login");
+            }
+            $this->setAdminSessionActivity();
         }
 
         if ($this->isMember() && ($_REQUEST['action'] ?? '') != 'logout') {
@@ -540,7 +575,7 @@ class Admin extends App {
 
     function logout() {
         if ($this->isLoged()) {
-            unset($_SESSION[$this->default_user]);
+            $this->clearAdminSession();
             Util::redirect(INSTALL_URL . "Admin/login");
         } else {
             Util::redirect(INSTALL_URL . "Admin/login");

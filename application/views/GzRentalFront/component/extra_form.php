@@ -536,8 +536,14 @@ function CheckHour(elem) {
          
          var startdate = document.getElementById('startdate');
          var date = startdate.value;
-         var newdate = date.split("-").reverse().join("-");
-         const d = new Date(newdate);
+         const d = parseDateInput(date);
+         if (!d || isNaN(d)) {
+            alert("Invalid date. Please select a valid date.");
+            document.getElementById('endtime').value = '';
+            document.getElementById('starttime').value = '';
+            document.getElementById('hours').value = '';
+            return;
+         }
          let endTime = $("#endtime").val();
 
         if(d.getDay() == 0 ){
@@ -578,8 +584,14 @@ function CheckHour(elem) {
 
          var startdate = document.getElementById('startdate');
          var date = startdate.value;
-         var newdate = date.split("-").reverse().join("-");
-         const d = new Date(newdate);
+         const d = parseDateInput(date);
+         if (!d || isNaN(d)) {
+            alert("Invalid date. Please select a valid date.");
+            document.getElementById('endtime').value = '';
+            document.getElementById('starttime').value = '';
+            document.getElementById('hours').value = '';
+            return;
+         }
          
          
           if (d.getDay() != 6) {
@@ -1028,8 +1040,11 @@ function setDefaultTime_28_oct_2025(){
     debugger;
     var startdate = document.getElementById('startdate');
     var date = startdate.value;
-    var newdate = date.split("-").reverse().join("-");
-    const d = new Date(newdate);
+    const d = parseDateInput(date);
+    if (!d || isNaN(d)) {
+        console.error("Invalid date object:", date);
+        return;
+    }
     if(d.getDay() == 0 ){ 
         $("#starttime").val("15:00");
         $("#endtime").val("19:00");
