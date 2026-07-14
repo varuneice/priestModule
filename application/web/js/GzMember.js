@@ -81,15 +81,12 @@
             });
         }
 
-        var ignoreChange = false;
-        $('input:radio[name=rate]').on('ifChanged', function (event) {
+        function calculateSelectedMemberPrice() {
             var frm = $('#payment-form');
 
-            if (ignoreChange) {
-                ignoreChange = false;
+            if (!frm.length || !$('input:radio[name=rate]:checked').length) {
                 return;
             }
-
             $.ajax({
                 type: "POST",
                 data: frm.serialize(),
@@ -103,11 +100,33 @@
                     $("#pm_amount").val(json.pm_amount);
                     $("#lm_h_amount").val(json.lm_h_amount);
                     $("#total").val(json.total);
-
-                    ignoreChange = true;
                 }
             });
+        }
+
+        function selectMemberRate(rateValue) {
+            var $rate = $('input:radio[name=rate][value="' + rateValue + '"]');
+            if (!$rate.length) {
+                return;
+            }
+
+            if ($.fn.iCheck) {
+                $rate.iCheck('check');
+            } else {
+                $rate.prop('checked', true).trigger('change');
+            }
+            calculateSelectedMemberPrice();
+        }
+
+        $('input:radio[name=rate]').on('ifChanged change', function (event) {
+            calculateSelectedMemberPrice();
         });
+
+        $('#donation').on('change keyup', function () {
+            calculateSelectedMemberPrice();
+        });
+
+        calculateSelectedMemberPrice();
 
         var ignoreChange = false;
         let selectedSize;
@@ -143,6 +162,7 @@
                 $("#Spouselast").prop('required',false);
                 $("#Spousefirst").prop('readonly',true);
                 $("#Spouselast").prop('readonly',true);
+                selectMemberRate('gmi_1');
             } else{
               document.getElementById('children').style.removeProperty('display');
                 document.getElementById('pricemembership').style.removeProperty('display');
@@ -151,6 +171,7 @@
                 $("#Spouselast").prop('required',true);
                  $("#Spousefirst").prop('readonly',false);
                 $("#Spouselast").prop('readonly',false);
+                selectMemberRate('gmf_1');
             }
            
         });

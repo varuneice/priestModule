@@ -387,7 +387,7 @@ if (!empty($tpl['arr'])) {
                         <tr class="tr" id="memberindividual">
                             <td colspan="2" class="td">General Member-Individual(Due jan1/Apr 1 every year) </td>
                             <td class="td" id="newprice" >
-                                <input  required="" type="radio" name="rate"
+                                <input  required="" type="radio" name="rate" checked
                                     value="gmi_1">$<?php echo $tpl['option_arr_values']['gmi_1'] ?? ''; ?>
                                 </td>
 								<td class="td" id="renprice" style="display: none;">

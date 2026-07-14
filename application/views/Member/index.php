@@ -10,6 +10,20 @@
 <?php
 require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
 ?>
+<style>
+    .member-index-tabs > .nav-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+    }
+    .member-index-tabs > .nav-tabs > li {
+        float: none;
+        margin-bottom: -1px;
+    }
+    .member-index-tabs > .nav-tabs > li > a {
+        white-space: nowrap;
+    }
+</style>
 <!-- Main content -->
 <section class="content">
     <div class="navbar-inner">
@@ -27,7 +41,7 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
         </ul>
         <?php require 'component/search.php'; ?>
     </div>
-    <div class="nav-tabs-custom">
+    <div class="nav-tabs-custom member-index-tabs">
         <ul class="nav nav-tabs">
             <li class="active">
                 <a data-toggle="tab" href="#tab_1"><?php echo __('Gen Active Members'); ?></a>
@@ -60,7 +74,7 @@ require_once VIEWS_PATH . 'Layouts/admin/error_notice.php';
                 <a data-toggle="tab" href="#tab_10"><?php echo __('Duplicates marked inactive'); ?></a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#tab_11"><?php echo __('GC Duplicates'); ?></a>
+                <a data-toggle="tab" href="#tab_11">GC Duplicates</a>
             </li>
         </ul>
         <div class="tab-content">
