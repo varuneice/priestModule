@@ -253,7 +253,7 @@ $tpl['option_arr_values'] = array_merge(
                             <span>
                                 <?php
                                 $payment_method_arr = __('payment_method_arr');
-                                echo $payment_method_arr[$_POST['payment_method'] ?? ''] ?? '';
+                                echo (($_POST['payment_method'] ?? '') == 'check') ? 'Check' : ($payment_method_arr[$_POST['payment_method'] ?? ''] ?? '');
                                 ?>
                             </span>
                             <div class="control-group"></div>

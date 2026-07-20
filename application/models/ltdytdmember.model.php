@@ -107,7 +107,7 @@ class ltdytdmemberModel extends AppModel {
      public function AllMember()
     {
         $Memberid = $_POST['memberid'] ?? '';
-        $sql = 'SELECT * FROM '.$this->getTable().' WHERE Member_id="'."$Memberid".'"';
+        $sql = 'SELECT * FROM '.$this->getTable().' WHERE Member_id="'."$Memberid".'" AND FirstSal != "Late" AND (Active IS NULL OR Active = "")';
         $result = array();
         $arr = $this->execute($sql);
         return $arr;

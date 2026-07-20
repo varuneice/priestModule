@@ -192,13 +192,50 @@ class Member extends App {
         $MemberModel->memberphone($Tele);
     }
     
+    private function getExpiredStatusFromMember($member)
+    {
+        $firstLate = (($member['FirstSal'] ?? '') == 'Late');
+        $spouseLate = (($member['SpouseSal'] ?? '') == 'Late');
+
+        if ($firstLate && $spouseLate) {
+            return 'both';
+        }
+        if ($firstLate) {
+            return 'member';
+        }
+        if ($spouseLate) {
+            return 'spouse';
+        }
+        return '';
+    }
+
+    private function getExpiredLogStatus($expiredStatus)
+    {
+        switch ($expiredStatus) {
+            case 'member':
+                return 'Firste';
+            case 'spouse':
+                return 'Spe';
+            case 'both':
+                return 'E';
+            case '':
+                return 'ExpiredCleared';
+            default:
+                return '';
+        }
+    }
+
     private function applyExpiredStatusSelection()
     {
         if (!array_key_exists('expired_status', $_POST)) {
-            return;
+            return null;
         }
 
         $expiredStatus = $_POST['expired_status'];
+        if (!in_array($expiredStatus, array('', 'member', 'spouse', 'both'), true)) {
+            $expiredStatus = '';
+        }
+
         $_POST['FirstSal'] = '';
         $_POST['SpouseSal'] = '';
 
@@ -217,6 +254,27 @@ class Member extends App {
         }
 
         unset($_POST['expired_status']);
+        return $expiredStatus;
+    }
+
+    private function logExpiredStatusChange($MemberLogModel, $oldExpiredStatus, $newExpiredStatus)
+    {
+        if ($newExpiredStatus === null || $oldExpiredStatus === $newExpiredStatus) {
+            return;
+        }
+
+        $status = $this->getExpiredLogStatus($newExpiredStatus);
+        if ($status === '') {
+            return;
+        }
+
+        $logData = array();
+        $logData['Category'] = $_POST['membercategory'] ?? ($_POST['Category'] ?? '');
+        $logData['member_id'] = $_POST['Member_id'] ?? ($_POST['dataid'] ?? '');
+        $logData['Createdon'] = date('Y-m-d H:i:s');
+        $logData['Updatedby'] = $this->isMember() ? (string)(int)$this->getMemberId() : (string)(int)($this->getUserId() ?: 0);
+        $logData['Status'] = $status;
+        $MemberLogModel->save($logData);
     }
 
     function create() {
@@ -991,9 +1049,13 @@ class Member extends App {
 
             unset($_POST['password']);
             $_POST['Senior'] = !empty($_POST['Senior']) ? 'YES' : '';
-            $this->applyExpiredStatusSelection();
+            $oldExpiredStatus = $this->getExpiredStatusFromMember($member);
+            $newExpiredStatus = $this->applyExpiredStatusSelection();
 
             $ID = $MemberModel->update(array_merge($data, $_POST));
+            if (!empty($ID)) {
+                $this->logExpiredStatusChange($MemberLogModel, $oldExpiredStatus, $newExpiredStatus);
+            }
             $seniorSaved = $MemberModel->updateSeniorStatusById($_POST['ID'] ?? 0, $_POST['Senior'] ?? '', $_POST['Gotra'] ?? '');
             if (empty($ID) && $seniorSaved) {
                 $ID = $_POST['ID'] ?? 0;

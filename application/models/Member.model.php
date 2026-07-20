@@ -121,7 +121,7 @@ class MemberModel extends AppModel {
      public function AllMember()
     {
         $Memberid = $_POST['memberid'] ?? '';
-        $sql = 'SELECT * FROM '.$this->getTable().' WHERE Member_id="'."$Memberid".'"';
+        $sql = 'SELECT * FROM '.$this->getTable().' WHERE Member_id="'."$Memberid".'" AND FirstSal != "Late" AND (Active IS NULL OR Active = "")';
         $result = array();
         $arr = $this->execute($sql);
         return $arr;
@@ -625,6 +625,7 @@ class MemberModel extends AppModel {
         WHERE Member_id > 0 AND LENGTH(Member_id) <= 4
         AND Category IN ('GD') 
         AND YEAR(pay_date) != YEAR(CURDATE()) 
+        AND FirstSal != 'Late'
         AND (Active IS NULL OR Active = '')";
         $arr = $this->execute($sql);
         return $arr;
@@ -637,13 +638,9 @@ class MemberModel extends AppModel {
         WHERE Member_id > 0 AND LENGTH(Member_id) <= 4 
         AND Category NOT IN ('GD', 'GM') 
         AND YEAR(pay_date) != YEAR(CURDATE()) 
+        AND FirstSal != 'Late'
         AND (Active IS NULL OR Active = '')";
         $arr = $this->execute($sql);
         return $arr;
     }
 }
-
-?>
-
-
-

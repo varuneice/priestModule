@@ -997,6 +997,9 @@ if (!empty($_POST['create_donation'])) {
                         }
                         ?>
                         <div id="otp-session-verified" style="display:none"><?= htmlspecialchars((string) $otpVerifiedMember, ENT_QUOTES, 'UTF-8') ?></div>
+                        <script>
+                            window.isAdminLoggedInForDonation = <?php echo $this->controller->isAdmin() ? 'true' : 'false'; ?>;
+                        </script>
 
                     <?php } ?>
 

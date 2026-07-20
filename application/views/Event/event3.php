@@ -642,6 +642,7 @@ if (!empty($_POST['create_event'])) {
         }
         return $el;
     }
+    var isAdminLoggedInForEvent = <?php echo $this->controller->isAdmin() ? 'true' : 'false'; ?>;
     var otpVerifiedMemberId = $('#otp-session-verified').text().trim();
     var otpSessionVerified  = !!otpVerifiedMemberId;
 
@@ -680,6 +681,13 @@ if (!empty($_POST['create_event'])) {
                 document.getElementById("Email").value = "";
                 document.getElementById("namenonmember").value = "";
                 $('#otp-verified-banner').removeClass('otp-show');
+
+                if (isAdminLoggedInForEvent) {
+                    $('#otp-session-verified').text('');
+                    otpSessionVerified = false;
+                    otpVerifiedMemberId = '';
+                    return;
+                }
 
                 if (otpSessionVerified) {
                     $('#otp-verified-banner').addClass('otp-show');

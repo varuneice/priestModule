@@ -582,6 +582,100 @@ class GzRentalFront extends AppRental {
                             echo "</div>";
                     }
                     
+                    } elseif (($_POST['payment_method'] ?? '') == 'check') {
+                        if ($_POST['checkAmount'] !== '' && $_POST['checkAmount'] !== null && $_POST['checkAmount'] > 0) {
+                            $opts = array();
+                            $opts['id'] = $id;
+                            $opts['status'] = 'confirmed';
+                            $RentalBookingModel->update($opts);
+
+                            date_default_timezone_set("America/Chicago");
+                            $today = date("Y/m/d");
+                            $value = array();
+                            $value['oid'] = $_POST['oid'] ?? '';
+                            $value['Member_id'] = $_POST['Member_id'] ?? '';
+                            $value['MemberName'] = trim(($_POST['first_name'] ?? '') . ' ' . ($_POST['second_name'] ?? ''));
+                            $value['Amount'] = $_POST['checkAmount'] ?? '';
+                            $value['PaymentOption'] = $_POST['payment_method'] ?? '';
+                            $value['payment_status'] = 'confirmed';
+                            $value['payment_timestamp'] = '';
+                            $value['stripe_return'] = '';
+                            $value['transaction_id'] = $_POST['chkno'] ?? '';
+                            $value['paid_amount'] = $_POST['checkAmount'] ?? '';
+                            $value['update_on'] = $_POST['UpdateOn'] ?? '';
+                            $value['stripe_product'] = '';
+                            $value['pay_date'] = $_POST['chkdate'] ?? $today;
+                            $value['pay_type'] = 'RENTAL';
+                            $value['pay_for'] = '1 Rental';
+                            $value['Tele1'] = $_POST['phone'] ?? '';
+                            $value['email'] = $_POST['email'] ?? '';
+                            $value['City'] = $_POST['city'] ?? '';
+                            $value['State'] = $_POST['state'] ?? '';
+                            $value['Zip_Code'] = $_POST['zip'] ?? '';
+                            $value['bank'] = $_POST['bank'] ?? '';
+                            $value['chkno'] = $_POST['chkno'] ?? '';
+                            $value['chkdate'] = $_POST['chkdate'] ?? '';
+                            $value['ReceiveBy'] = $_POST['ReceiveBy'] ?? '';
+                            $DonationModel->SaveDataInDonation($value);
+
+                            $arr = $RentalBookingModel->get($id);
+                            $prevlocation = $arr['location'] ?? '';
+                            if ($prevlocation == 'Both') {
+                                $location = 'Auditorium & Kalabhavan';
+                            } else {
+                                $location = $prevlocation;
+                            }
+                            $mobileno = $arr['phone'] ?? '';
+                            $email = $arr['email'] ?? '';
+                            $address_1 = $arr['address_1'] ?? '';
+                            $Bookinno = $arr['booking_number'] ?? '';
+                            $memberid = $_POST['Member_id'] ?? '';
+                            $Date = date("F j, Y", $newDate);
+                            $starttimefinal = $data['StartTime'] ?? '';
+                            $endtimefinal = $data['EndTime'] ?? '';
+                            $hours = $data['Hours'] ?? '';
+                            $checkAmount = $_POST['checkAmount'] ?? '';
+
+                            echo "<div style='margin-left:110px;' class = 'pay'>
+                                <table border='4' width='585px'>
+                                <tr>
+                                <td colspan='2'> <img src='" . INSTALL_URL . "thankyouscreen.jpg' alt='' height='167px' style='margin-left:12em;'><h1 style='text-align:center;font-family:fangsong; font-size:30px;'><b>Houston Durga Bari Society</b></h1> </td> </tr>
+                                <tr>
+                                <td>Booking Number</td> <td>" . $Bookinno . "</td> </tr>
+                                <tr><td>Member Id</td> <td>" . $memberid . "</td> </tr>
+                                <tr><td>Customer Name</td> <td>" . ($arr['first_name'] ?? '') . ' ' . ($arr['second_name'] ?? '') . "</td> </tr>
+                                <tr><td>Customer Email Address</td> <td>" . $email . "</td> </tr>
+                                <tr><td>Customer Phone Number</td> <td>" . $mobileno . "</td>  </tr>
+                                <tr><td>Location</td> <td>" . $location . "</td>  </tr>
+                                <tr><td>Amount</td> <td>$ " . $checkAmount . "</td>  </tr>
+                                <tr><td>Address</td> <td>" . $address_1 . "</td>  </tr>
+                                <tr><td>Selected Payment Method</td> <td>Check</td>  </tr>
+                                <tr><td>Rental Date</td> <td>" . $getdate . "</td>  </tr>
+                                <tr><td>Start Time</td> <td>" . $starttimefinal . "</td>  </tr>
+                                <tr><td>End Time</td> <td>" . $endtimefinal . "</td>  </tr>
+                                <tr><td>Hours</td> <td>" . $hours . "</td>  </tr>
+                                <tr><td>Status</td> <td>confirmed</td></tr>";
+
+                            $msg = '';
+                            $result = $this->sendBookingEmailsNew($id, 'confirmation', 'Rental Client', $email, $mobileno, $Date, $location, $starttimefinal, $endtimefinal, $hours, $address_1, $msg, $invoiceid);
+                            $invoiceID = $result;
+                            $path = INSTALL_URL . 'application/web/upload/invoice/Rentalbooking_' . $id . '_invoice_' . $invoiceID . '.pdf';
+                            $smsMsg = 'Houston Durga Bari: Your Rental reservation request have been submitted. Booking Number is ' . $Bookinno . ' for ' . $location . ' on ' . $Date . ' Security Deposit: $ ' . $checkAmount . '  Order Id: ' . ($_POST['oid'] ?? '') . '. Click here for receipt:' . $path;
+                            $this->SendSMS($mobileno, $smsMsg);
+
+                            echo "<a onclick = 'alertcheck()'>Go to home</a> ";
+                        } else {
+                            echo "<div style='margin-left:140px;' class = 'pay'>
+                    <table border='4' width='585px'>
+                    <tr>
+                    <td colspan='2'> <img src='../thankyou.jpg' alt='' height='405px' width='580px'></td> </tr>
+                    <tr>
+                    <td colspan='2'><b>Your booking request have been submitted.
+                    Your payment is not confirmed yet. To confirm your booking please contact to<a href='mailto:hdbs.payment@durgabari.org'> hdbs.payment@durgabari.org</a></b></td></tr>
+                    </tr>";
+                            echo "</table>";
+                            echo "</div>";
+                        }
                     } elseif (($_POST['payment_method'] ?? '') == 'stripe') {
                         require APP_PATH . '/helpers/stripe/lib/Stripe.php';
 

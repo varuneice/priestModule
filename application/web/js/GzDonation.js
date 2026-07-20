@@ -3,6 +3,7 @@
         var url = $("#container-abc-url-id").text();
         var otpSessionVerifiedValue = $.trim($('#otp-session-verified').text());
         var otpSessionVerified = otpSessionVerifiedValue !== '' && otpSessionVerifiedValue !== '0';
+        var isAdminLoggedInForDonation = window.isAdminLoggedInForDonation === true || window.isAdminLoggedInForDonation === 'true';
 
         function getMemberInput(res, id) {
             var nodes = $.parseHTML($.trim(res || ''), document, false) || [];
@@ -464,6 +465,13 @@
                 $("#namenonmember").prop('required', false);
                 $("#term").prop('required', true);
                 $("#demmember").prop('required', true);
+
+                if (isAdminLoggedInForDonation) {
+                    $('#IDMembertd').removeClass('disabledbutton');
+                    $('#term').prop('readonly', false);
+                    $('#otp-session-verified').text('');
+                    return;
+                }
 
                 if (otpSessionVerified) {
                     fillFormFromOtp();

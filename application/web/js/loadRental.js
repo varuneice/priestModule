@@ -40,7 +40,13 @@ var gz$ = jQuery.noConflict();
             gz$('#MemberID1').hide();
         }
     }
-
+    function resetRentalCheckUi() {
+        gz$('#checkdata').hide();
+        gz$('#checkbankname').prop('required', false).val('');
+        gz$('#checkno').prop('required', false).val('');
+        gz$('#checkamount').prop('required', false).val('');
+        gz$('#checkdate').prop('required', false).val('');
+    }
     gz$(function () {
         var $memberSelect = gz$('#registrationmember');
         if ($memberSelect.is('select')) {
@@ -417,6 +423,13 @@ var gz$ = jQuery.noConflict();
             }).delegate("#booking_frm_btn_id", "click", function (e) {
                 e.preventDefault();
                 self.ABCBookingForm.call(self);
+            }).delegate('#checkamount', 'change', function (e) {
+                var checkAmount = parseFloat((gz$('#checkamount').val() || '').replace(/[$,\s]/g, ''));
+                var rentalAmount = parseFloat(getRentalAdvanceAmount());
+                if (!isNaN(checkAmount) && !isNaN(rentalAmount) && checkAmount !== rentalAmount) {
+                    alert('Rental amount and check amount are not same. Please fill correct amount.');
+                    gz$('#checkamount').val('').focus();
+                }
             }).delegate("#details_frm_btn_id", "click", function (e) {
                 e.preventDefault();
                 if (gz$(this).hasClass('disabled') || gz$(this).prop('disabled')) {
@@ -469,18 +482,21 @@ var gz$ = jQuery.noConflict();
 
                 if (gz$(this).val() == 'credit_card') {
                     resetZelleUi(true);
+                    resetRentalCheckUi();
                     gz$("#details_frm_btn_id").prop('disabled', false).removeClass('disabled');
                     gz$("#bank_acount_details").hide();
                     gz$("#others_details").hide();
                     gz$("#credit_card_details").show();
                 } else if (gz$(this).val() == 'bank_acount') {
                     resetZelleUi(true);
+                    resetRentalCheckUi();
                     gz$("#details_frm_btn_id").prop('disabled', false).removeClass('disabled');
                     gz$("#bank_acount_details").show();
                     gz$("#credit_card_details").hide();
                     gz$("#stripe_details").hide();
                     gz$("#others_details").hide();
                 } else if (gz$(this).val() == 'others') {
+                    resetRentalCheckUi();
                     resetZelleUi(false);
                     gz$('#details_frm_btn_id').prop('disabled', true).addClass('disabled');
                     gz$('#bank_acount_details').hide();
@@ -494,6 +510,7 @@ var gz$ = jQuery.noConflict();
                     gz$.post(self.options.server + 'load.php?controller=GzFront&action=importZelleAndSearch', {});
                 } else if (gz$(this).val() == 'stripe') {
                     resetZelleUi(true);
+                    resetRentalCheckUi();
                     gz$("#details_frm_btn_id").prop('disabled', false).removeClass('disabled');
                     gz$("#others_details").hide();
                     gz$("#bank_acount_details").hide();
@@ -505,8 +522,21 @@ var gz$ = jQuery.noConflict();
                         self.card = elements.create('card');
                         self.card.mount('#stripe_details');
                     }
+                } else if (gz$(this).val() == 'check') {
+                    resetZelleUi(true);
+                    gz$('#stripe_details').hide();
+                    gz$('#others_details').hide();
+                    gz$('#bank_acount_details').hide();
+                    gz$('#credit_card_details').hide();
+                    gz$('#checkdata').show();
+                    gz$('#details_frm_btn_id').prop('disabled', false).removeClass('disabled');
+                    gz$('#checkbankname').prop('required', true).val('');
+                    gz$('#checkno').prop('required', true).val('');
+                    gz$('#checkamount').prop('required', true).val('');
+                    gz$('#checkdate').prop('required', true).val('');
                 } else {
                     resetZelleUi(true);
+                    resetRentalCheckUi();
                     gz$("#details_frm_btn_id").prop('disabled', false).removeClass('disabled');
                     gz$("#bank_acount_details").hide();
                     gz$("#credit_card_details").hide();

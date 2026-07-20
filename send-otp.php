@@ -54,6 +54,11 @@ function normalizeLookupPhone($phone) {
     return preg_replace('/\D/', '', $phone);
 }
 
+function envFlag($name, $fallback = false) {
+    $value = $GLOBALS[$name] ?? $fallback;
+    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+}
+
 function findMemberByEmailOrPhone($con, $lookup) {
     $lookup = trim($lookup);
     $isEmail = strpos($lookup, '@') !== false;
@@ -178,9 +183,12 @@ $stmt->execute();
 $stmt->close();
 
 // ── 6. Send OTP ───────────────────────────────────────────────────────
+$otpMailEnabled = envFlag('ENV_OTP_MAIL_ENABLED', false);
+$otpSmsEnabled  = envFlag('ENV_OTP_SMS_ENABLED', false);
+
 if ($method === 'email') {
 
-    if ($ENV_MAIL_ENABLED) {
+    if ($otpMailEnabled) {
         try {
             $mail = new PHPMailer(true);
             $mail->isSMTP();
@@ -220,7 +228,7 @@ if ($method === 'email') {
 
 } else {
 
-    if ($ENV_SMS_ENABLED) {
+    if ($otpSmsEnabled) {
         $to = normalizeSmsPhone($phone);
         otpDebugLog('[send-otp] Sending SMS OTP for member ' . $member_id . ' to ' . maskPhone($to));
         try {

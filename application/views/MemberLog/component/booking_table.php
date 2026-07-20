@@ -88,6 +88,9 @@
                           else if($tpl['arr'][$i]['Status'] == 'Spe'){
                             echo 'SpouseSal Expired';
                            }
+                           else if($tpl['arr'][$i]['Status'] == 'ExpiredCleared'){
+                            echo 'Expired Status Cleared';
+                           }
                            else if($tpl['arr'][$i]['Status'] == 'T'){
                             echo 'Active';
                           } else if($tpl['arr'][$i]['Status'] == 'F'){

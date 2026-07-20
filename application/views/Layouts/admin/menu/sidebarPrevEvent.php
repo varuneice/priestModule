@@ -79,7 +79,7 @@
                 <?php } ?>
                 <!-- new menu added-- -->
                 <?php if ($this->controller->isAdmin()) { ?>
-                    <li style="display:block" class="treeview <?php echo (@$_REQUEST['controller'] == 'Member') ? "active" : ""; ?>">
+                    <li style="display:block" class="treeview <?php echo (in_array(@$_REQUEST['controller'], array('Member', 'MemberCategory'))) ? "active" : ""; ?>">
                         <a href="#">
                             <i class="fa fa-fw fa-user"></i>
                             <span><?php echo __('Members'); ?></span>
@@ -87,6 +87,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="<?php echo (@$_REQUEST['controller'] == 'Member' && @$_REQUEST['action'] == 'index') ? "active" : ""; ?>"><a href="<?php echo INSTALL_URL; ?>Member/index"><i class="fa    fa-caret-right"></i><?php echo __('all_members'); ?></a></li>
+<li class="<?php echo (@$_REQUEST['controller'] == 'MemberCategory' && @$_REQUEST['action'] == 'index') ? "active" : ""; ?>"><a href="<?php echo INSTALL_URL; ?>MemberCategory/index"><i class="fa  fa-caret-right"></i><?php echo __('Category'); ?></a></li>
                             
                         </ul>
                     </li>

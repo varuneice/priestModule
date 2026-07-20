@@ -762,6 +762,8 @@ function autoFillRentalMemberById(memberId) {
         }
     });
 }
+var isAdminLoggedInForRental = <?php echo $this->controller->isAdmin() ? 'true' : 'false'; ?>;
+
 function membercheck() {
         var selectedString = select.options[select.selectedIndex].value;
         var checkdata = selectedString;
@@ -782,6 +784,14 @@ function membercheck() {
             $('#otp-gate').hide();
             $('#otp-verified-banner').removeClass('otp-show').css('display', 'none');
 
+            if (isAdminLoggedInForRental) {
+                document.getElementById('termdiv').style.display = "block";
+                document.getElementById('memberidtd').style.display = "block";
+                $("#term").prop('required', true);
+                $("#idmem").prop('required', true);
+                $('#otp-session-verified').text('');
+                return;
+            }
             if ($.trim($('#otp-session-verified').text())) {
                 $('#otp-verified-banner').addClass('otp-show').css('display', 'flex');
                 autoFillRentalMemberById($.trim($('#otp-session-verified').text()));

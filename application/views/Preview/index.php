@@ -387,7 +387,7 @@
 
     <script>
 (function ($) {
-    function previewMemberCheck() {
+    function previewMemberCheckFallback() {
         var value = $('#registrationmember').val();
         var isMember = value === 'member';
         $('#termdiv, #memberidtd').toggle(isMember);
@@ -400,8 +400,13 @@
         }
     }
 
-    window.membercheck = previewMemberCheck;
-    $(document).on('change', '#registrationmember', previewMemberCheck);
+    $(document).on('change', '#registrationmember', function () {
+        if (typeof window.membercheck === 'function') {
+            window.membercheck();
+        } else {
+            previewMemberCheckFallback();
+        }
+    });
 })(jQuery);
 </script>
     </body>
@@ -438,3 +443,4 @@
     });
 
 </script>
+

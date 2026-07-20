@@ -1445,11 +1445,11 @@ class AppRental extends Controller
             $option_arr_values['font_famaly_today'],
             $option_arr_values['font_style_today'],
             '#gz-abc-main-container-' . ($_GET['cid'] ?? ''),
-            $this->tpl['option_arr_values']['bg_day_off'],
-            $this->tpl['option_arr_values']['color_day_off'],
-            $this->tpl['option_arr_values']['font_size_day_off'],
-            $this->tpl['option_arr_values']['font_famaly_day_off'],
-            $this->tpl['option_arr_values']['font_style_day_off']
+            $this->tpl['option_arr_values']['bg_day_off'] ?? '',
+            $this->tpl['option_arr_values']['color_day_off'] ?? '',
+            $this->tpl['option_arr_values']['font_size_day_off'] ?? '',
+            $this->tpl['option_arr_values']['font_famaly_day_off'] ?? '',
+            $this->tpl['option_arr_values']['font_style_day_off'] ?? ''
         );
 
 

@@ -578,43 +578,77 @@ foreach ($_SESSION[$this->controller->default_product]['slots'][$_REQUEST['cid']
     }
     
     
+var isAdminLoggedInForPriest = <?php echo $this->controller->isAdmin() ? 'true' : 'false'; ?>;
+
+function clearPriestMemberFields() {
+    $("#first_name").val("");
+    $("#second_name").val("");
+    $("#phone").val("");
+    $("#email").val("");
+    $("#address_1").val("");
+    $("#term").val("");
+    $("#termMember").val("");
+    $("#idmem").val("");
+}
+
+function setPriestManualMemberSearch(enabled) {
+    document.getElementById('termdiv').style.display = enabled ? "block" : "none";
+    document.getElementById('memberidtd').style.display = enabled ? "block" : "none";
+    $("#term").prop('required', enabled);
+    $("#idmem").prop('required', enabled);
+}
+
+function autoFillPriestMemberById(memberId) {
+    if (!memberId) {
+        return;
+    }
+    gz$("#termMember").val(memberId);
+    MemberSelectPriest();
+}
+
 function membercheck() {
-    //debugger;
         var checkdata = $("#registrationmember").val();
 
         if (checkdata == "member") {
-          document.getElementById('termdiv').style.display = "block";
-          document.getElementById('memberidtd').style.display = "block";
-                $("#first_name").val("");
-                $("#second_name").val("");
-                $("#phone").val("");
-                $("#email").val("");
-                $("#address_1").val("");
-                $("#term").val("");
-                $("#termMember").val("");
-                $("#idmem").val("");
-                $("#term").prop('required',true);
-                $("#idmem").prop('required',true);
+                clearPriestMemberFields();
+                $('#otp-verified-banner').removeClass('otp-show').css('display', 'none');
+
+                if (isAdminLoggedInForPriest) {
+                    setPriestManualMemberSearch(true);
+                    return;
+                }
+
+                setPriestManualMemberSearch(false);
+                if ($.trim($('#otp-session-verified').text())) {
+                    $('#otp-verified-banner').addClass('otp-show').css('display', 'flex');
+                    autoFillPriestMemberById($.trim($('#otp-session-verified').text()));
+                    return;
+                }
+
+                if (typeof window.OtpMemberVerify !== 'undefined') {
+                    window.OtpMemberVerify.open({
+                        onVerified: function(memberId) {
+                            $('#otp-verified-banner').addClass('otp-show').css('display', 'flex');
+                            $('#otp-session-verified').text(memberId || '');
+                            autoFillPriestMemberById(memberId);
+                        }
+                    });
+                    window.onOtpModalCancelled = function () {
+                        $('#registrationmember').val('');
+                        $('#otp-session-verified').text('');
+                        $('#otp-verified-banner').removeClass('otp-show').css('display', 'none');
+                        clearPriestMemberFields();
+                    };
+                }
 
         } else
         {
-            document.getElementById('termdiv').style.display = "none";
-            document.getElementById('memberidtd').style.display = "none";
-                $("#first_name").val("");
-                $("#second_name").val("");
-                $("#phone").val("");
-                $("#email").val("");
-                $("#address_1").val("");
-                $("#term").val("");
-                $("#termMember").val("");
-                $("#idmem").val("");
-                $("#term").prop('required',false);
-                $("#idmem").prop('required',false);
-                
-             
+            setPriestManualMemberSearch(false);
+            clearPriestMemberFields();
+            $('#otp-verified-banner').removeClass('otp-show').css('display', 'none');
+            $('#otp-session-verified').text('');
         }
     }
-    
     gz$(function(){
         gz$('input[type="text"]').change(function(){
         this.value = $.trim(this.value);
@@ -780,3 +814,5 @@ function MemberSelectPriest() {
 
 
 </script>
+
+

@@ -228,9 +228,13 @@ $_SESSION[$this->controller->default_product][$this->controller->default_captcha
                         }
                     }
                     ?>
+                    <?php if ($this->controller->isAdmin()) { ?>
+                        <option value="check">Check</option>
+                    <?php } ?>
                 </select>
             </div>
             <div id="stripe_details" style="display: none;"></div>
+
             <div class="card-errors"></div>
             <div id="others_details" style="display: none;">
                 <div class="form-group" style="display: none;">
@@ -238,6 +242,33 @@ $_SESSION[$this->controller->default_product][$this->controller->default_captcha
                     <input data-rule-required='true' id="confirm_code" class="form-control input-sm" type="text" name="confirm_code" size="25" value="" title="<?php echo __('confirm_code'); ?>" placeholder="<?php echo __('confirm_code'); ?>">
                     <div class="control-group"></div>
                    
+                </div>
+            </div>
+            <div class="box-body" style="display:none" id="checkdata">
+                <div class="box-body">
+                    <table class="table table-bordered table-hover table-striped" style="margin-top: -30px;">
+                        <thead>
+                            <tr>
+                                <th>Bank Name</th>
+                                <th>Check No</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Deposit Account</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td"><input style="WIDTH: 100%;" type="text" id="checkbankname" name="bank" class="form-control input-sm" value=""></td>
+                                <td class="td"><input style="WIDTH: 100%;" type="number" id="checkno" name="chkno" class="form-control input-sm" value=""></td>
+                                <td class="td"><input style="WIDTH: 100%;" type="number" id="checkamount" name="checkAmount" class="form-control input-sm" value=""></td>
+                                <td class="td"><input style="WIDTH: 100%;" type="date" id="checkdate" name="chkdate" class="form-control input-sm" value=""></td>
+                                <td class="td"><select name="ReceiveBy" class="accountDropdown">
+                                    <option value="RentalAccount">Rental Account</option>
+                                    <option value="RegularAccount">Regular Account</option>
+                                </select></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div id="MemberID1" style="display:none;width:100%;max-width:100%;margin-top:10px;" class="form-group">

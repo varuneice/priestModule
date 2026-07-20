@@ -54,7 +54,7 @@ class BookingModel extends AppModel {
         array('name' => 'checkno', 'type' => 'varchar', 'default' => ':NULL'),
         array('name' => 'checkAmount', 'type' => 'varchar', 'default' => ':NULL'),
         array('name' => 'CheckDate', 'type' => 'varchar', 'default' => ':NULL'),
-        array('name' => 'CheckDepositAccount ', 'type' => 'varchar', 'default' => ':NULL'),
+        array('name' => 'CheckDepositAccount', 'type' => 'varchar', 'default' => ':NULL'),
     );
 
     public function getBookingDetails_23_may($id) {
