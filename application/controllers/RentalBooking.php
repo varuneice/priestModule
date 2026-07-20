@@ -1089,7 +1089,7 @@ function categoryitemindex(){
             //   $newDate =  $_POST['date'];
             //     $Date=date("F j, Y",$newDate);
             //     $url ="Your booking has been pending";
-            //     $_POST['email'] = "varunkumar953685@gmail.com" ;
+            //     $_POST['email'] = "customer@example.com" ;
             //     $_POST['phone'] = 9536855214;
             //     $result = $this->sendBookingEmailsNew($ID, 'pending', 'client', $_POST['email'],$_POST['phone'],$Date,$_POST['location'],$_POST['Starttime'],$_POST['Endtime'],$_POST['Hours'],$_POST['address_1'],$url,$invoiceid);
             //     $msg = 'Houston Durga Bari: Your Rental Booking Number is ' . $Bookinno . ' for ' . $location . ' on ' . $Date . '  Durga Bari has been canceled your rental reservation booking. Your Security Deposit will be refunded';
@@ -1458,7 +1458,7 @@ function categoryitemindex(){
                 $mail->FromName = $option_arr['notify_email'];
                 $mail->AddAddress($booking_details['email']);
                 $mail->AddCC('rental@durgabari.org');
-                $mail->AddBCC('varun.kumar@eicetechnology.com');
+
                 $mail->CharSet = 'UTF-8';
                 $mail->Subject = $_POST['subject'] ?? '';
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!";

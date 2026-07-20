@@ -47,7 +47,8 @@ class I18n extends Controller {
         if (is_array($this->local) && array_key_exists($key, $this->local)) {
             return $this->local[$key]['value'];
         } else {
-            return $key . 'not set!';
+            // return $key . 'not set!';
+            return $key;
         }
     }
 

@@ -256,9 +256,16 @@ $categ = $tpl['arr']['Category'] ?? '';
                     <tr class="tr">
                         <td class="td">Senior 70+</td>
                         <td class="td">
-                            <input <?php echo (($tpl['arr']['Senior'] ?? '') == 'YES') ? "checked='checked'" : ""; ?>
-                                type="checkbox" id="Senior" name="Senior" value="YES">
-                            <label for="Senior">Senior 70+</label>
+                            <?php $isSenior = (($tpl['arr']['Senior'] ?? '') == 'YES'); ?>
+                            <select id="Senior" name="Senior" class="form-control input-sm" style="width: 140px;">
+                                <option value="" <?php echo !$isSenior ? "selected='selected'" : ""; ?>>No</option>
+                                <option value="YES" <?php echo $isSenior ? "selected='selected'" : ""; ?>>Yes</option>
+                            </select>
+                        </td>
+                        <td class="td">Gotra</td>
+                        <td class="td">
+                            <input id="Gotra" class="form-control input-sm" type="text" name="Gotra" size="25"
+                                value="<?php echo $tpl['arr']['Gotra'] ?? ''; ?>" title="Gotra" placeholder="Gotra">
                         </td>
                     </tr>
                     </tr>
@@ -802,7 +809,7 @@ $categ = $tpl['arr']['Category'] ?? '';
                 <input type="hidden" name="transactionid" value="<?php echo $tpl['arr']['transaction_id'] ?? ''; ?>" />
                 <button id="submit" class="btn btn-primary" autocomplete="off" value="<?php echo __('save'); ?>"
                     name="submit" tabindex="9" type="submit"><i
-                        class="fa fa-fw fa-save"></i>&nbsp;&nbsp;<?php echo _('Save') ?></button>
+                        class="fa fa-fw fa-save"></i>&nbsp;&nbsp;<?php echo __('save'); ?></button>
                                 </form>
             </section>
         </fieldset>
@@ -1066,3 +1073,8 @@ let startYear = 1800;
       $('#year_birth4').append($('<option />').val(i).html(i));
     }
 </script>
+
+
+
+
+

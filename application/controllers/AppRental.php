@@ -12,6 +12,30 @@ class AppRental extends Controller
 
     var $models = array();
 
+    private function createMailer()
+    {
+        global $ENV_MAIL_ENABLED, $ENV_SMTP_HOST, $ENV_SMTP_PORT, $ENV_SMTP_USER, $ENV_SMTP_PASS, $ENV_SMTP_FROM;
+
+        $mail = new PHPMailer(true);
+
+        if (!empty($ENV_MAIL_ENABLED) && !empty($ENV_SMTP_HOST)) {
+            $mail->isSMTP();
+            $mail->Host = $ENV_SMTP_HOST;
+            $mail->SMTPAuth = true;
+            $mail->Username = $ENV_SMTP_USER;
+            $mail->Password = $ENV_SMTP_PASS;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = (int)$ENV_SMTP_PORT;
+        }
+
+        if (!empty($ENV_SMTP_FROM)) {
+            $mail->From = $ENV_SMTP_FROM;
+            $mail->FromName = 'Houston Durga Bari Society';
+        }
+
+        return $mail;
+    }
+
     function __construct()
     {
 
@@ -615,12 +639,12 @@ class AppRental extends Controller
 
             $from_name = "HDBS Durgabari";
             $from_address = "hdbs.payment@durgabari.org";
-            // $to_name = $email;
-            // $to_address = $email;
+            $to_name = $email;
+            $to_address = $email;
 
 
-            $to_name = "varunkumar953685@gmail.com";
-            $to_address = "varunkumar953685@gmail.com";
+
+
 
 
 
@@ -630,21 +654,21 @@ class AppRental extends Controller
             $description = $msg;
             $location = $loc;
             $domain = INSTALL_URL . 'Rental/index';
-            $mail = new PHPMailer(true);
+            $mail = $this->createMailer();
 
             $mail->AddReplyTo($option_arr['notify_email'] ?? '', "Admin");
-            $mail->From = $option_arr['notify_email'] ?? '';
-            $mail->FromName = $option_arr['notify_email'] ?? '';
+            // $mail->From = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            // $mail->FromName = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
             // $mail->AddCC('rental@durgabari.org');
 
-            $mail->AddCC('varunkumar953685@gmail.com');
+            $mail->AddCC('rental@durgabari.org');
 
             // Event calendar data (unchanged)
             $ical = 'BEGIN:VCALENDAR' . "\r\n" .
                 // ... (same as original)
                 'END:VCALENDAR' . "\r\n";
 
-            $to = "varunkumar953685@gmail.com";
+            $to = $to_address;
             $mail->CharSet = 'UTF-8';
             $mail->AddAddress($to_address, $to_name);
             $mail->Subject = $subjetc;
@@ -838,13 +862,13 @@ class AppRental extends Controller
             $description = $msg;
             $location = $loc;
             $domain = INSTALL_URL . 'Rental/index';
-            $mail = new PHPMailer(true); //New instance, with exceptions enabled
+            $mail = $this->createMailer(); //New instance, with exceptions enabled
             //$mail->isSMTP();
             //$mail->SMTPDebug = 0;  // tell the class to use Sendmail
             $mail->AddReplyTo($option_arr['notify_email'] ?? '', "Admin");
-            $mail->From = $option_arr['notify_email'] ?? '';
-            $mail->FromName = $option_arr['notify_email'] ?? '';
-            $mail->AddCC('varunkumar953685@gmail.com');
+            // $mail->From = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            // $mail->FromName = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            $mail->AddCC('rental@durgabari.org');
 
 
             //$mail->ContentType = 'text/calendar';
@@ -1112,13 +1136,13 @@ class AppRental extends Controller
             $description = $msg;
             $location = $loc;
             $domain = INSTALL_URL . 'Rental/index';
-            $mail = new PHPMailer(true);
+            $mail = $this->createMailer();
 
             $mail->AddReplyTo($option_arr['notify_email'] ?? '', "Admin");
-            $mail->From = $option_arr['notify_email'] ?? '';
-            $mail->FromName = $option_arr['notify_email'] ?? '';
-            $mail->AddCC('varunkumar953685@gmail.com');
-            $mail->AddBCC('varun.kumar@eicetechnology.com');
+            // $mail->From = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            // $mail->FromName = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            $mail->AddCC('rental@durgabari.org');
+
 
             // Event calendar data (unchanged)
             $ical = 'BEGIN:VCALENDAR' . "\r\n" .
@@ -1273,13 +1297,13 @@ class AppRental extends Controller
         }
 
         try {
-            $mail = new PHPMailer(true); //New instance, with exceptions enabled
+            $mail = $this->createMailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
             $mail->AddReplyTo($option_arr['notify_email'] ?? '', "Admin");
-            $mail->From = $option_arr['notify_email'] ?? '';
-            $mail->FromName = $option_arr['notify_email'] ?? '';
+            // $mail->From = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
+            // $mail->FromName = $option_arr['notify_email'] ?? ''; // SMTP sender is set by createMailer()
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($to);
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -1736,7 +1760,7 @@ class AppRental extends Controller
 
 
         try {
-            $mail = new PHPMailer(true); //New instance, with exceptions enabled
+            $mail = $this->createMailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
 
             $email_arr = explode(',', $option_arr['notify_email'] ?? '');
@@ -1746,10 +1770,10 @@ class AppRental extends Controller
             }
 
             $email_arr = explode(',', $option_arr['notify_email'] ?? '');
-            $mail->From = $email_arr[0] ?? '';
-            $mail->FromName = $email_arr[0] ?? '';
+            // $mail->From = $email_arr[0] ?? ''; // SMTP sender is set by createMailer()
+            // $mail->FromName = $email_arr[0] ?? ''; // SMTP sender is set by createMailer()
 
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($to);
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap

@@ -985,7 +985,7 @@ class App extends Controller {
             // $mail->From = $option_arr['notify_email'] ?? ''; // shared-hosting sendmail
             // $mail->FromName = $option_arr['notify_email'] ?? ''; // shared-hosting sendmail
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($to);
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -1096,8 +1096,7 @@ class App extends Controller {
                         case 'priest':
                             $message = Util::replaceToken($option_arr['admin_confirmation_email_booking'], $replacement);
                             $subjetc = $option_arr['admin_confirmation_subject_booking'];
-                            $to = 'varun.kumar@eicetechnology.com';
-                            //$to = $option_arr['notify_email'];
+                            $to = $option_arr['notify_email'];
                             break;
                 }
                 break;
@@ -1198,7 +1197,7 @@ class App extends Controller {
                 // $message1 .= $ical;
 
                 $mail->CharSet = 'UTF-8';
-                $mail->AddAddress('varunkumar953685@gmail.com');
+                $mail->AddAddress($to_address, $to_name);
                 $mail->Subject = $subjetc;
                 $mail->AddStringAttachment($ical, "meeting.ics", "7bit", "text/calendar; charset=utf-8; method=REQUEST");
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -1368,7 +1367,7 @@ class App extends Controller {
             // $mail->From = $option_arr['notify_email'] ?? ''; // shared-hosting sendmail
             // $mail->FromName = $option_arr['notify_email'] ?? ''; // shared-hosting sendmail
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($to);
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -1834,7 +1833,7 @@ class App extends Controller {
             // $mail->From = $email_arr[0] ?? ''; // shared-hosting sendmail
             // $mail->FromName = $email_arr[0] ?? ''; // shared-hosting sendmail
 
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($to);
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -1939,7 +1938,7 @@ class App extends Controller {
                 // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
                 //$mail->FromName = $Parking['email'];
                 $mail->CharSet = 'UTF-8';
-                $mail->AddAddress('varunkumar953685@gmail.com');
+                $mail->AddAddress($Parking['email']);
                 //$mail->addaddress('avinash.verma@eiceinternational.com');
                 $mail->Subject = $subjetc;
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -2040,7 +2039,7 @@ class App extends Controller {
                 // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
                 //$mail->FromName = $Parking['email'];
                 $mail->CharSet = 'UTF-8';
-                $mail->AddAddress('varunkumar953685@gmail.com');
+                $mail->AddAddress($Parking['email']);
                 //$mail->addaddress('avinash.verma@eiceinternational.com');
                 $mail->Subject = $subjetc;
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -2149,11 +2148,11 @@ class App extends Controller {
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $Parking['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
+            $mail->AddAddress($Badges['Email']);
              //$mail->addaddress('avinash.verma@eiceinternational.com');
              //$list = array('one@example.com', 'two@example.com', 'three@example.com');
              //$this->mail->ADDCC($list);
-             $mail->AddCC('varun.kumar@eicetechnology.com');
+             $mail->AddCC('hdbs.payment@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -2261,7 +2260,7 @@ class App extends Controller {
                 // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
                 //$mail->FromName = $Parking['email'];
                 $mail->CharSet = 'UTF-8';
-                $mail->AddAddress('varunkumar953685@gmail.com');
+                $mail->AddAddress($Parking['email']);
                 //$mail->addaddress('avinash.verma@eiceinternational.com');
                 $mail->Subject = $subjetc;
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -2370,11 +2369,11 @@ class App extends Controller {
                 // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
                 //$mail->FromName = $fooddata['email'];
                 $mail->CharSet = 'UTF-8';
-                $mail->AddAddress('varunkumar953685@gmail.com');
+                $mail->AddAddress($fooddata['Email']);
                  //$mail->addaddress('avinash.verma@eiceinternational.com');
                 // $list = array('paras.sharma@eiceinternational.com');
                  //$this->mail->ADDCC($list);
-                 $mail->addcc('varun.kumar@eicetechnology.com');
+                 $mail->addcc('events@durgabari.org');
                 $mail->Subject = $subjetc;
                 $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
                 $mail->WordWrap = 80; // set word wrap
@@ -2498,8 +2497,8 @@ class App extends Controller {
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
              //$this->mail->ADDCC($list);
             $mail->Subject = $subjetc;
@@ -2634,8 +2633,8 @@ class App extends Controller {
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
              //$this->mail->ADDCC($list);
             $mail->Subject = $subjetc;
@@ -2772,11 +2771,11 @@ function sendEmailEvent($data)
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
             //$this->mail->ADDCC($list);
-            $mail->AddCC('varun.kumar@eicetechnology.com');
+            $mail->AddCC('events@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -2923,11 +2922,11 @@ function sendEmailTicketEvent($data)
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
             //$this->mail->ADDCC($list);
-            $mail->AddCC('varun.kumar@eicetechnology.com');
+            $mail->AddCC('education@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -3072,11 +3071,11 @@ function sendEmailTicketEvent($data)
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
              //$this->mail->ADDCC($list);
-           $mail->AddCC('varun.kumar@eicetechnology.com');
+           $mail->AddCC('hdbs.payment@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -3197,8 +3196,8 @@ function sendEmailmember($data, $oid)
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
              //$mail->addaddress('hdbs.payment@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -3335,10 +3334,9 @@ function sendEmailrenewalmember($data, $oid)
             // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
             //$mail->FromName = $data['email'];
             $mail->CharSet = 'UTF-8';
-            $mail->AddAddress('varunkumar953685@gmail.com');
-            $mail->AddAddress('varun.kumar@eicetechnology.com', 'Admin');
-            $mail->AddBCC('varun.kumar@eicetechnology.com');
-             //$mail->addaddress('hdbs.payment@durgabari.org');
+            $mail->AddAddress($data['email']);
+            $mail->AddAddress('hdbs.payment@durgabari.org', 'Admin');
+                         //$mail->addaddress('hdbs.payment@durgabari.org');
             $mail->Subject = $subjetc;
             $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
             $mail->WordWrap = 80; // set word wrap
@@ -3486,8 +3484,8 @@ function userpaymentemail($data)
          // $mail->From = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail — now set by _gz_new_mailer()
          // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
          $mail->CharSet = 'UTF-8';
-         $mail->AddAddress('varunkumar953685@gmail.com');
-         $mail->addcc('varun.kumar@eicetechnology.com');
+         $mail->AddAddress($data['email']);
+         $mail->addcc($ccemail);
          $mail->Subject = $subjetc;
          $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
          $mail->WordWrap = 80; // set word wrap
@@ -3622,8 +3620,8 @@ function sendEmailvendor($data, $url)
          // $mail->From = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail — now set by _gz_new_mailer()
          // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
          $mail->CharSet = 'UTF-8';
-         $mail->AddAddress('varunkumar953685@gmail.com');
-         $mail->addcc('varun.kumar@eicetechnology.com');
+         $mail->AddAddress($data['email']);
+         $mail->addcc($ccemail);
          $mail->Subject = $subjetc;
          $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
          $mail->WordWrap = 80; // set word wrap
@@ -3745,8 +3743,8 @@ function sendrecemail($data)
          // $mail->From = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail — now set by _gz_new_mailer()
          // $mail->FromName = 'hdbs.payment@durgabari.org'; // shared-hosting sendmail
          $mail->CharSet = 'UTF-8';
-         $mail->AddAddress('varunkumar953685@gmail.com');
-         $mail->addcc('varun.kumar@eicetechnology.com');
+         $mail->AddAddress($data['email']);
+         $mail->addcc($ccemail);
          $mail->Subject = $subjetc;
          $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
          $mail->WordWrap = 80; // set word wrap

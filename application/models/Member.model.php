@@ -274,7 +274,49 @@ class MemberModel extends AppModel {
                 AND Member_id >= 10000
                 AND (Active IS NULL OR Active = "")';
 
-        return $this->execute($sql);
+        $stmt = $this->getPdo()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
+    public function updateSeniorStatusById($id, $senior, $gotra = null)
+    {
+        $id = (int) $id;
+        if ($id <= 0) {
+            return false;
+        }
+
+        $senior = ($senior === 'YES') ? 'YES' : '';
+        $saveGotra = ($gotra !== null);
+        $sql = 'UPDATE ' . $this->getTable() . ' SET Senior = :senior';
+        $params = array(':senior' => $senior, ':id' => $id);
+
+        if ($saveGotra) {
+            $sql .= ', Gotra = :gotra';
+            $params[':gotra'] = trim((string) $gotra);
+        }
+
+        $sql .= ' WHERE ID = :id';
+        $stmt = $this->getPdo()->prepare($sql);
+        $stmt->execute($params);
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+        $checkSql = 'SELECT ID FROM ' . $this->getTable() . ' WHERE ID = :id AND COALESCE(Senior, "") = :senior';
+        $checkParams = array(':senior' => $senior, ':id' => $id);
+
+        if ($saveGotra) {
+            $checkSql .= ' AND COALESCE(Gotra, "") = :gotra';
+            $checkParams[':gotra'] = trim((string) $gotra);
+        }
+
+        $stmt = $this->getPdo()->prepare($checkSql);
+        $stmt->execute($checkParams);
+
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
        public function rentalmemberduplicate()
@@ -602,3 +644,6 @@ class MemberModel extends AppModel {
 }
 
 ?>
+
+
+

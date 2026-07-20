@@ -994,6 +994,10 @@ class Member extends App {
             $this->applyExpiredStatusSelection();
 
             $ID = $MemberModel->update(array_merge($data, $_POST));
+            $seniorSaved = $MemberModel->updateSeniorStatusById($_POST['ID'] ?? 0, $_POST['Senior'] ?? '', $_POST['Gotra'] ?? '');
+            if (empty($ID) && $seniorSaved) {
+                $ID = $_POST['ID'] ?? 0;
+            }
 
             $approvedMemberId = (int) ($_POST['Member_id'] ?? 0);
             $approvedCategory = strtoupper(trim((string) ($data['Category'] ?? ($_POST['Category'] ?? $cat ?? ''))));
@@ -3530,5 +3534,8 @@ function memberlookup() {
 }
 
 ?>
+
+
+
 
 
