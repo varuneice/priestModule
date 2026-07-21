@@ -30,5 +30,3 @@ class vendorpriceModel extends AppModel {
     }  
 
 }
-
-?>

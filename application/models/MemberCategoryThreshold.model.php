@@ -50,7 +50,3 @@ class MemberCategoryThresholdModel extends AppModel {
         return true;
     }
 }
-
-?>
-
-

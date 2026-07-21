@@ -705,6 +705,3 @@ public function Updatefoodcoupon($POST)
 
 
 }
-
-?>
-

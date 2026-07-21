@@ -874,6 +874,3 @@ class MemberLog extends App {
     // }
 
 }
-
-?>
-

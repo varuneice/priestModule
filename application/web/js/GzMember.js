@@ -84,15 +84,21 @@
         function calculateSelectedMemberPrice() {
             var frm = $('#payment-form');
 
+            console.log('[calculateSelectedMemberPrice] called. form found:', frm.length, 'rate checked:', $('input:radio[name=rate]:checked').length);
+
             if (!frm.length || !$('input:radio[name=rate]:checked').length) {
                 return;
             }
+
+            console.log('[calculateSelectedMemberPrice] request url:', url + "load.php?controller=Member&action=calculatePrice", 'data:', frm.serialize());
+
             $.ajax({
                 type: "POST",
                 data: frm.serialize(),
                 dataType: 'json',
                 url: url + "load.php?controller=Member&action=calculatePrice",
                 success: function (json) {
+                    console.log('[calculateSelectedMemberPrice] success response:', json);
                     $("#gmi_amount").val(json.gmi_amount);
                     $("#gmf_amount").val(json.gmf_amount);
                     $("#lm_amount").val(json.lm_amount);
@@ -100,6 +106,9 @@
                     $("#pm_amount").val(json.pm_amount);
                     $("#lm_h_amount").val(json.lm_h_amount);
                     $("#total").val(json.total);
+                },
+                error: function (xhr, status, err) {
+                    console.error('[calculateSelectedMemberPrice] ajax FAILED. status:', status, 'error:', err, 'http status:', xhr.status, 'response body:', xhr.responseText);
                 }
             });
         }

@@ -101,6 +101,3 @@ class donationdata extends App {
     }
 
 }
-
-?>
-

@@ -827,7 +827,3 @@ class Donations extends App
 
 
 }
-
-?>
-
-

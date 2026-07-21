@@ -629,6 +629,3 @@ function delete() {
 }
 
 }
-
-?>
-

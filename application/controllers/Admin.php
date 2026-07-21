@@ -729,7 +729,3 @@ class Admin extends App {
     }
 
 }
-?>
-
-
-

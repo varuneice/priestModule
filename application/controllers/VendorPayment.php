@@ -270,5 +270,3 @@ class VendorPayment extends App
 
 
 }
-?>
-

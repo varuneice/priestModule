@@ -165,4 +165,3 @@ class ConfirmCodeModel extends AppModel
         return $query->execute();
     }
 }
-?>

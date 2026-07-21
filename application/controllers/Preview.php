@@ -18,7 +18,3 @@ class Preview extends App {
     }
 
 }
-?>
-
-
-

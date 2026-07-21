@@ -31,13 +31,6 @@ error*.txt
 *.bak
 *.backup
 
-# Local-only scratch/debug scripts
-/clear-otp.php
-/clearcache.php
-/info.php
-/readlog.php
-/script.php
-/ServerTime.php
 
 # Local tooling/editor files
 .claude/

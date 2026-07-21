@@ -29,6 +29,3 @@ $message = $client->messages->create(
    }else{
 	   echo 'kuch ni';
    }
-
-?>
-

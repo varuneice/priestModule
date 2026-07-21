@@ -397,6 +397,3 @@ class Calendar extends App {
     }
 
 }
-
-?>
-

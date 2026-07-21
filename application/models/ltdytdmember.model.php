@@ -173,5 +173,3 @@ class ltdytdmemberModel extends AppModel {
         return $this->fetchMembers($opts, 'Active = "D"');
     }
 }
-
-?>

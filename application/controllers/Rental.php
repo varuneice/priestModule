@@ -18,7 +18,3 @@ class Rental extends App {
     }
 
 }
-?>
-
-
-

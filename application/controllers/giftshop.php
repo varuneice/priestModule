@@ -101,6 +101,3 @@ class giftshop extends App {
     
 
 }
-
-?>
-

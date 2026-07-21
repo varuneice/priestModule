@@ -429,6 +429,3 @@ class Items extends App {
     
 
 }
-
-?>
-

@@ -187,13 +187,3 @@ class MemberCategory extends App {
         return array_key_exists($category, $ranks) ? $ranks[$category] : null;
     }
 }
-
-?>
-
-
-
-
-
-
-
-

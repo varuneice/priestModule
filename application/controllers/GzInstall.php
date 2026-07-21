@@ -65,7 +65,3 @@ class GzInstall extends App {
     }
 
 }
-?>
-
-
-

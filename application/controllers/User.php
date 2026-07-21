@@ -276,6 +276,3 @@ class User extends App {
     }
 
 }
-
-?>
-

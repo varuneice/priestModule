@@ -369,7 +369,3 @@ class Settings extends App {
     
 
 }
-
-?>
-
-

@@ -278,6 +278,3 @@ class Invoice extends App {
     }
 
 }
-
-?>
-

@@ -652,7 +652,3 @@ $msg = 'Houston Durga Bari: Payment confirmation are Owner Name is ' . $OwnerNam
     }
 
 }
-
-?>
-
-

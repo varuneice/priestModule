@@ -2052,7 +2052,3 @@ function itemsimport() {
     }
 
 }
-
-?>
-
-

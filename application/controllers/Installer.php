@@ -207,6 +207,3 @@ class Installer extends Controller {
     }
 
 }
-
-?>
-

@@ -114,4 +114,3 @@ if (!defined("JS_PATH")) {
 if (!defined("UPLOAD_PATH")) {
     define("UPLOAD_PATH", "application/web/upload/");
 }
-?>

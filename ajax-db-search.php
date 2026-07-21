@@ -57,4 +57,3 @@ if (isset($_GET['term'])) {
     echo json_encode($memberData);
     $stmt->close();
 }
-?>

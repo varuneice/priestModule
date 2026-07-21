@@ -849,7 +849,3 @@ function priestpriceedit(){
     }
 
 }
-
-?>
-
-

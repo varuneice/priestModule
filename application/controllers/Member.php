@@ -3594,10 +3594,3 @@ function memberlookup() {
     }
 
 }
-
-?>
-
-
-
-
-

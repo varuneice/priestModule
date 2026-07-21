@@ -949,6 +949,3 @@ class Eventadmin extends App {
     
 
 }
-
-?>
-

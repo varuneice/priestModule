@@ -165,6 +165,3 @@ class Statistic extends App {
     }
 
 }
-
-?>
-

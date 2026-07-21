@@ -109,5 +109,3 @@ class StudentModel extends AppModel {
     }
 
 }
-
-?>

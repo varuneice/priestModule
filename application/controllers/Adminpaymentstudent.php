@@ -316,7 +316,3 @@ class Adminpaymentstudent extends App {
 
         }
     }
-
-?>
-
-

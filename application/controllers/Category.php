@@ -356,8 +356,3 @@ class Category extends App
     }
 
 }
-
-
-
-?>
-
