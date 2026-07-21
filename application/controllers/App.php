@@ -978,6 +978,8 @@ class App extends Controller {
                 break;
         }
 
+
+
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
@@ -1116,6 +1118,8 @@ class App extends Controller {
                 }
                 break;
         }
+        $invoice_id = null;
+
         try {
            
    
@@ -1205,7 +1209,6 @@ class App extends Controller {
                 $mail->WordWrap = 80; // set word wrap
                 $mail->MsgHTML($message);
                 //$mail->Body = $ical;
-                $invoice_id = null;
                 if (!empty($invoice)) {
                     $invoice_id = $invoice[0]['id'];
                     if (is_file(INSTALL_PATH . UPLOAD_PATH . 'invoice/' . 'booking_' . $id . '_invoice_' . $invoice_id . '.pdf')) {
@@ -1359,6 +1362,10 @@ class App extends Controller {
                 }
                 break;
         }
+
+
+
+        $invoice_id = null;
 
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -1819,6 +1826,8 @@ class App extends Controller {
         }
 
         
+
+
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
@@ -2139,6 +2148,8 @@ class App extends Controller {
             </div>';
         GzObject::loadFiles('Model', array('Badgesdata'));
         $BadgesdataModel = new BadgesdataModel();
+
+
 
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -2489,6 +2500,8 @@ class App extends Controller {
         GzObject::loadFiles('Model', array('Donation'));
        $DonationModel = new DonationModel();
 
+
+
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
@@ -2624,6 +2637,8 @@ class App extends Controller {
             </div>';
         GzObject::loadFiles('Model', array('Donation'));
        $DonationModel = new DonationModel();
+
+
 
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -2763,7 +2778,9 @@ function sendEmailEvent($data)
           GzObject::loadFiles('Model', array('Event'));
           $EventModel = new EventModel();
 
-         try {
+
+
+        try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
             $mail->addreplyto('hdbs.payment@durgabari.org', "Admin");
@@ -2914,7 +2931,9 @@ function sendEmailTicketEvent($data)
           GzObject::loadFiles('Model', array('Event'));
           $EventModel = new EventModel();
 
-         try {
+
+
+        try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
             $mail->addreplyto('hdbs.payment@durgabari.org', "Admin");
@@ -3063,6 +3082,8 @@ function sendEmailTicketEvent($data)
         GzObject::loadFiles('Model', array('Student'));
        $StudentModel = new StudentModel();
 
+
+
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
             //$mail->IsSendmail();  // tell the class to use Sendmail
@@ -3187,6 +3208,8 @@ function sendEmailmember($data, $oid)
             </div>';
         GzObject::loadFiles('Model', array('Member'));
        $MemberModel = new MemberModel();
+
+
 
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -3325,6 +3348,8 @@ function sendEmailrenewalmember($data, $oid)
             </div>';
         GzObject::loadFiles('Model', array('Member'));
        $MemberModel = new MemberModel();
+
+
 
         try {
             $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -3477,6 +3502,8 @@ function userpaymentemail($data)
          </div>';
      GzObject::loadFiles('Model', array('Vendor'));
      $VendorModel = new VendorModel();
+
+     $invoice_id = null;
 
      try {
          $mail = _gz_new_mailer(); //New instance, with exceptions enabled
@@ -3805,5 +3832,6 @@ function SendSMS($mobileno, $msg)
 }
 
 }
+
 
 

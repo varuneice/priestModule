@@ -7,6 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_name('TimeSlotBookingCalendarPHP');
     session_start();
 }
+require_once __DIR__ . '/application/config/otp_session.php';
 if (empty($_SESSION['otp_verified_member']) && empty($_SESSION['admin_user'])) {
     echo json_encode([]);
     exit;
@@ -57,3 +58,4 @@ if (isset($_GET['term'])) {
     echo json_encode($memberData);
     $stmt->close();
 }
+
