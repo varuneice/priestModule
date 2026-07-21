@@ -1086,6 +1086,14 @@ var flag = false;
 
         if (selectVal === 'member') {
             $('#otp-verified-banner').css('display', 'none');
+
+            if (typeof isAdminLoggedInForPriest !== 'undefined' && isAdminLoggedInForPriest) {
+                if (typeof setPriestManualMemberSearch === 'function') {
+                    setPriestManualMemberSearch(true);
+                }
+                return;
+            }
+
             if (otpSessionVerified) {
                 fillBookingFormFromOtp(otpVerifiedMemberId);
                 return;
